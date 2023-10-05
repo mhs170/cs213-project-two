@@ -23,7 +23,7 @@ public class AccountDatabase {
     } //increase the capacity by 4
 
     public boolean contains(Account account) {
-        if (find(account) != -1) {
+        if (find(account) != NOT_FOUND) {
             return true;
         }
         return false;
@@ -41,7 +41,7 @@ public class AccountDatabase {
 
     public boolean close(Account account) {
         int accountIndex = find(account);
-        if (accountIndex != -1) {
+        if (accountIndex != NOT_FOUND) {
             for (int i = accountIndex; i < accounts.length - 1; i++) {
                 accounts[i] = accounts[i + 1]; //removes the event
             }
