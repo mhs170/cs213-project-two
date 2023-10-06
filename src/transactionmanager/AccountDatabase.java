@@ -53,10 +53,17 @@ public class AccountDatabase {
     } //remove the given account
 
     public boolean withdraw(Account account) {
+        if (contains(account)){
+
+        }
+        return false;
     } //check if account exists using contains(), update balance, return
     // false if insufficient fund
 
     public void deposit(Account account) {
+        if (contains(account)){
+
+        }
     } //check if account exists using contains(), update balance.
 
     public void printSorted() {
