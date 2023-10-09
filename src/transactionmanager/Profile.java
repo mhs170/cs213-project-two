@@ -19,4 +19,9 @@ public class Profile implements Comparable<Profile> {
     public Date getDob(){
         return dob;
     }
+
+    @Override
+    public int compareTo(Profile o) {
+        return 0; //REPLACE WITH REAL METHOD
+    }
 }
