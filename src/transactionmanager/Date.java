@@ -145,6 +145,21 @@ public class Date implements Comparable<Date> {
     }
 
     /**
+     * Return if the Date is today
+     * @return true if it is today, false otherwise
+     */
+    public boolean isToday() {
+        Calendar today = Calendar.getInstance();
+        int currYear = today.get(Calendar.YEAR);
+        int currMonth = today.get(Calendar.MONTH) + 1;
+        int currDay = today.get(Calendar.DAY_OF_MONTH);
+
+        Date currDate = new Date(currYear, currMonth, currDay);
+
+        return this.compareTo(currDate) == 0;
+    }
+
+    /**
      * Return if the Date is in the future
      * @return true if in future, false if in past
      */
