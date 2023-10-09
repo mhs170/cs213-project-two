@@ -112,12 +112,16 @@ public class TransactionManager {
             String firstName    = inputs[2];
             String lastName     = inputs[3];
             String dateOfBirthStr  = inputs[4];
-            double initialDeposit = Integer.parseInt(inputs[5]);
+            double initialDeposit = Double.parseDouble(inputs[5]);
 
             Date dateOfBirth = createDate(dateOfBirthStr);
             if(dateOfBirth == null) {
                 System.out.printf("DOB invalid: %s not a" +
                         " valid calendar date!%n", dateOfBirthStr);
+            }
+
+            if(initialDeposit <= 0) {
+                System.out.println("Initial deposit cannot be 0 or negative.");
             }
 
             switch (accountType) {
@@ -145,6 +149,56 @@ public class TransactionManager {
     }
 
     /**
+     * Close an account
+     * @param inputs user inputted strings that identify account
+     */
+    private void CloseAccount(String[] inputs) {
+        String accountType  = inputs[1];
+        String firstName    = inputs[2];
+        String lastName     = inputs[3];
+        String dateOfBirthStr  = inputs[4];
+    }
+
+    /**
+     * Deposit to an account
+     * @param inputs user inputted strings that identify account
+     */
+    private void DepositToAccount(String[] inputs) {
+        try {
+            String accountType  = inputs[1];
+            String firstName    = inputs[2];
+            String lastName     = inputs[3];
+            String dateOfBirthStr  = inputs[4];
+            double amount = Double.parseDouble(inputs[5]);
+
+            if(amount <= 0) {
+                System.out.println("Deposit - amount cannot be" +
+                        " 0 or negative.");
+            }
+
+        } catch (NumberFormatException exp) {
+            System.out.println("Not a valid amount.");
+        }
+    }
+
+    /**
+     * Withdraw from an account
+     * @param inputs user inputted strings that identify account
+     */
+    private void WithdrawFromAccount(String[] inputs) {
+        try {
+            String accountType  = inputs[1];
+            String firstName    = inputs[2];
+            String lastName     = inputs[3];
+            String dateOfBirthStr  = inputs[4];
+            double amount = Double.parseDouble(inputs[5]);
+
+        } catch (NumberFormatException exp) {
+            System.out.println("Not a valid amount.");
+        }
+    }
+
+    /**
      * Runs the user-input TransactionManager
      */
     public void run(){
@@ -158,9 +212,9 @@ public class TransactionManager {
 
             switch (command) {
                 case "O" -> OpenAccount(inputs);
-                case "C" -> {}
-                case "D" -> {}
-                case "W" -> {}
+                case "C" -> CloseAccount(inputs);
+                case "D" -> DepositToAccount(inputs);
+                case "W" -> WithdrawFromAccount(inputs);
                 case "P" -> {}
                 case "PI" -> {}
                 case "UB" -> {}
