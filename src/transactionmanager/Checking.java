@@ -6,15 +6,28 @@ public class Checking extends Account {
     public static final double BALANCE_TO_WAIVE_FEE = 1000;
     public static final int MONTHS_IN_YEAR = 12;
 
+    /**
+     * Creates a new checking account
+     * @param holder Profile information of the account holder
+     * @param balance account's balance
+     */
     public Checking(Profile holder, double balance) {
         super(holder, balance, ANNUAL_INTEREST_RATE, MONTHLY_FEE);
     }
 
+    /**
+     * Method to calculate monthly interest
+     * @return account's monthly interest
+     */
     @Override
     public double monthlyInterest() {
         return ANNUAL_INTEREST_RATE / MONTHS_IN_YEAR;
     }
 
+    /**
+     * Method to set the account's monthly fee
+     * @return account's monthly fee, 0 if balance >= $1000
+     */
     @Override
     public double monthlyFee() {
         if (balance < BALANCE_TO_WAIVE_FEE){

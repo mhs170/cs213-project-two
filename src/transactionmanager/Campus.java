@@ -5,6 +5,7 @@ public enum Campus {
     NEWARK(1),
     CAMDEN(2);
     private final int campusCode;
+
     Campus(int campusCode){
         this.campusCode = campusCode;
     }

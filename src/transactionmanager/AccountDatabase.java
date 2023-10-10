@@ -5,6 +5,11 @@ public class AccountDatabase {
     private Account[] accounts; //list of various types of accounts
     private int numAcct; //number of accounts in the array
 
+    /**
+     * Method that searches for an account in the database
+     * @param account Account to search for
+     * @return index of the account in the array if found, otherwise returns -1.
+     */
     private int find(Account account) {
         for (int i = 0; i < numAcct; i++) {
             if (accounts[i].equals(account)) {
@@ -14,6 +19,9 @@ public class AccountDatabase {
         return NOT_FOUND;
     } //search for an account in the array
 
+    /**
+     * Method to increase the capacity of the array by 4.
+     */
     private void grow() {
         Account[] newEventArray = new Account[accounts.length + 4];
         for (int i = 0; i < accounts.length; i++) {
@@ -22,6 +30,11 @@ public class AccountDatabase {
         accounts = newEventArray;
     } //increase the capacity by 4
 
+    /**
+     * Method that checks if an account is in the database.
+     * @param account account to search for
+     * @return true if found, false otherwise.
+     */
     public boolean contains(Account account) {
         if (find(account) != NOT_FOUND) {
             return true;
@@ -30,6 +43,11 @@ public class AccountDatabase {
         //overload if necessary
     }
 
+    /**
+     * Method that opens an account (adds account to end of array)
+     * @param account account to add to database
+     * @return true after account is added
+     */
     public boolean open(Account account) {
         if (numAcct == accounts.length) {
             grow();
@@ -39,6 +57,11 @@ public class AccountDatabase {
         return true;
     } //add a new account
 
+    /**
+     * Method that closes an account (removes account from array)
+     * @param account account to close/remove
+     * @return true after account is removed, false if account is not found
+     */
     public boolean close(Account account) {
         int accountIndex = find(account);
         if (accountIndex != NOT_FOUND) {

@@ -8,6 +8,13 @@ public abstract class Account implements Comparable<Account> {
 
     public abstract double monthlyFee();
 
+    /**
+     * Creates a new account object
+     * @param holder Profile information of the account holder
+     * @param balance account's balance
+     * @param monthlyInterest account's monthly interest
+     * @param monthlyFee account's monthly fee
+     */
     public Account(Profile holder, double balance, double monthlyInterest,
                    double monthlyFee) {
         this.holder = holder;
