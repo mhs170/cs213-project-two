@@ -43,6 +43,16 @@ public class Profile implements Comparable<Profile> {
 
     @Override
     public int compareTo(Profile o) {
-        return 0; //REPLACE WITH REAL METHOD
+        if (this.lname.compareTo(o.lname) == 0){
+            if (this.fname.compareTo(o.fname) == 0){
+                return this.dob.compareTo(o.dob);
+            }
+            else{
+                return this.fname.compareTo(o.fname);
+            }
+        }
+        else{
+            return this.lname.compareTo(o.lname);
+        }
     }
 }
