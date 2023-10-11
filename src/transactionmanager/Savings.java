@@ -1,7 +1,5 @@
 package transactionmanager;
 
-import javax.print.DocFlavor;
-
 public class Savings extends Account {
     protected boolean isLoyal; //loyal customer status
     public static final double ANNUAL_INTEREST_RATE = 0.04;
