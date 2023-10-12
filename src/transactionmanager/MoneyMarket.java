@@ -11,8 +11,8 @@ public class MoneyMarket extends Savings{
      * @param balance Balance of the college checking account
      * @param withdrawal number of withdrawals
      */
-    public MoneyMarket(Profile holder, double balance, int withdrawal) {
-        super(holder, balance);
+    public MoneyMarket(Profile holder, double balance, boolean isLoyal, int withdrawal) {
+        super(holder, balance, isLoyal);
         this.withdrawal = withdrawal;
     }
 }

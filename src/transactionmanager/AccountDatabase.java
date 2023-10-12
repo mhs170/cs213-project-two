@@ -6,6 +6,16 @@ public class AccountDatabase {
     private int numAcct; //number of accounts in the array
 
     /**
+     * Create a new Accounts Database
+     * @param accounts initial array
+     * @param numAcct initial number of accounts
+     */
+    AccountDatabase(Account[] accounts, int numAcct) {
+        this.accounts = accounts;
+        this.numAcct = numAcct;
+    }
+
+    /**
      * Method that searches for an account in the database
      * @param account Account to search for
      * @return index of the account in the array if found, otherwise returns -1.
@@ -49,6 +59,9 @@ public class AccountDatabase {
      * @return true after account is added
      */
     public boolean open(Account account) {
+        if(contains(account)) {
+            return false;
+        }
         if (numAcct == accounts.length) {
             grow();
         }
@@ -77,7 +90,6 @@ public class AccountDatabase {
 
     public boolean withdraw(Account account) {
         if (contains(account)){
-
         }
         return false;
     } //check if account exists using contains(), update balance, return

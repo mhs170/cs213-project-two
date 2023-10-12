@@ -14,8 +14,9 @@ public class Savings extends Account {
      * @param holder  Profile information of the account holde
      * @param balance account's balance
      */
-    public Savings(Profile holder, double balance) {
+    public Savings(Profile holder, double balance, boolean isLoyal) {
         super(holder, balance, ANNUAL_INTEREST_RATE, MONTHLY_FEE);
+        this.isLoyal = isLoyal;
     }
 
     /**

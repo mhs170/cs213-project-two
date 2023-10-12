@@ -27,6 +27,26 @@ public class TransactionManager {
     }
 
     /**
+     * Print that the account is opened, or it's already in database
+     * @param profile the profile of the account
+     * @param accountType the account type
+     */
+    private void printStatus(
+            Profile profile, String accountType, boolean opened
+    ) {
+        String extra;
+        if(opened) extra = "opened.";
+        else extra = "is already in the database.";
+
+        System.out.printf("%s %s %s(%s) %s\n",
+                profile.getFname(),
+                profile.getLname(),
+                profile.getDob(),
+                accountType,
+                extra);
+    }
+
+    /**
      * Create checking account
      * @param firstName first name of user
      * @param lastName last name of user
@@ -37,9 +57,13 @@ public class TransactionManager {
             String firstName,
             String lastName,
             Date dateOfBirth,
-            double initialDeposit
+            double initialDeposit,
+            AccountDatabase database
     ) {
-
+        Profile profile = new Profile(firstName, lastName, dateOfBirth);
+        Checking account = new Checking(profile, initialDeposit);
+        boolean openSuccess = database.open(account);
+        printStatus(profile, "C", openSuccess);
     }
 
     /**
@@ -55,11 +79,23 @@ public class TransactionManager {
             String lastName,
             Date dateOfBirth,
             double initialDeposit,
-            int campusCode
+            int campusCode,
+            AccountDatabase database
     ) {
-        if(campusCode != 0 && campusCode != 1 && campusCode != 2) {
-            System.out.println("Invalid campus code.");
+        Campus campus;
+        switch(campusCode) {
+            case 0 -> campus = Campus.NEWBRUNSWICK;
+            case 1 -> campus = Campus.NEWARK;
+            case 2 -> campus = Campus.CAMDEN;
+            default -> {
+                System.out.println("Invalid campus code.");
+                return;
+            }
         }
+        Profile profile = new Profile(firstName, lastName, dateOfBirth);
+        CollegeChecking account = new CollegeChecking(profile, initialDeposit, campus);
+        boolean openSuccess = database.open(account);
+        printStatus(profile, "CC", openSuccess);
     }
 
     /**
@@ -75,11 +111,24 @@ public class TransactionManager {
             String lastName,
             Date dateOfBirth,
             double initialDeposit,
-            int loyalCustomer
+            int loyalCustomer,
+            AccountDatabase database
     ) {
-        if(loyalCustomer != 0 && loyalCustomer != 1) {
-            System.out.println("Invalid command.");
+        boolean isLoyal;
+        if(loyalCustomer == 0) {
+            isLoyal = false;
         }
+        else if (loyalCustomer == 1) {
+            isLoyal = true;
+        }
+        else {
+            System.out.println("Invalid command.");
+            return;
+        }
+        Profile profile = new Profile(firstName, lastName, dateOfBirth);
+        Savings account = new Savings(profile, initialDeposit, isLoyal);
+        boolean openSuccess = database.open(account);
+        printStatus(profile, "S", openSuccess);
     }
 
     /**
@@ -93,20 +142,26 @@ public class TransactionManager {
             String firstName,
             String lastName,
             Date dateOfBirth,
-            double initialDeposit
+            double initialDeposit,
+            AccountDatabase database
     ) {
         if(initialDeposit < 2000.00) {
             System.out.println(
                     "Minimum of $2000 to open a Money Market account."
             );
+            return;
         }
+        Profile profile = new Profile(firstName, lastName, dateOfBirth);
+        MoneyMarket account = new MoneyMarket(profile, initialDeposit, true, 0);
+        boolean openSuccess = database.open(account);
+        printStatus(profile, "MM", openSuccess);
     }
 
     /**
      * Parses input and runs the proper create account method
      * @param inputs array of user inputted strings
      */
-    private void OpenAccount(String[] inputs) {
+    private void OpenAccount(String[] inputs, AccountDatabase database) {
         try {
             String accountType  = inputs[1];
             String firstName    = inputs[2];
@@ -114,37 +169,42 @@ public class TransactionManager {
             String dateOfBirthStr  = inputs[4];
             double initialDeposit = Double.parseDouble(inputs[5]);
 
+
             Date dateOfBirth = createDate(dateOfBirthStr);
             if(dateOfBirth == null) {
                 System.out.printf("DOB invalid: %s not a" +
                         " valid calendar date!%n", dateOfBirthStr);
+                return;
             }
 
             if(initialDeposit <= 0) {
                 System.out.println("Initial deposit cannot be 0 or negative.");
+                return;
             }
 
             switch (accountType) {
                 case "C" -> OpenCheckingAccount(
-                        firstName, lastName, dateOfBirth, initialDeposit
+                        firstName, lastName, dateOfBirth, initialDeposit,
+                        database
                 );
                 case "CC" -> OpenCollegeCheckingAccount(
                         firstName, lastName, dateOfBirth, initialDeposit,
-                        Integer.parseInt(inputs[5]) //campus code
+                        Integer.parseInt(inputs[6]), //campus code
+                        database
                 );
                 case "S" -> OpenSavingsAccount(
                         firstName, lastName, dateOfBirth, initialDeposit,
-                        Integer.parseInt(inputs[5]) //loyalty
+                        Integer.parseInt(inputs[6]), //loyalty
+                        database
                 );
                 case "MM" -> OpenMoneyMarketAccount(
-                        firstName, lastName, dateOfBirth, initialDeposit
+                        firstName, lastName, dateOfBirth, initialDeposit,
+                        database
                 );
                 default -> System.out.println("Invalid command!");
             }
         } catch(IndexOutOfBoundsException exp) {
             System.out.println("Missing data for opening an account.");
-        } catch(NumberFormatException exp) {
-            System.out.println("Not a valid amount.");
         }
     }
 
@@ -157,6 +217,8 @@ public class TransactionManager {
         String firstName    = inputs[2];
         String lastName     = inputs[3];
         String dateOfBirthStr  = inputs[4];
+
+
     }
 
     /**
@@ -174,6 +236,7 @@ public class TransactionManager {
             if(amount <= 0) {
                 System.out.println("Deposit - amount cannot be" +
                         " 0 or negative.");
+                return;
             }
 
         } catch (NumberFormatException exp) {
@@ -204,6 +267,9 @@ public class TransactionManager {
     public void run(){
         System.out.println("Transaction Manager is running.\n");
 
+        AccountDatabase database =
+                new AccountDatabase(new Account[]{}, 0);
+
         Scanner scanner = new Scanner(System.in);
         scannerLoop: while (scanner.hasNextLine()) {
             String commandLine  = scanner.nextLine();
@@ -211,7 +277,7 @@ public class TransactionManager {
             String command      = inputs[0];
 
             switch (command) {
-                case "O" -> OpenAccount(inputs);
+                case "O" -> OpenAccount(inputs, database);
                 case "C" -> CloseAccount(inputs);
                 case "D" -> DepositToAccount(inputs);
                 case "W" -> WithdrawFromAccount(inputs);
