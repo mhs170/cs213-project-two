@@ -25,7 +25,7 @@ public class AccountDatabase {
      */
     private int find(Account account) {
         for (int i = 0; i < numAcct; i++) {
-            if (accounts[i].equals(account)) {
+            if (accounts[i].compareTo(account) == 0) {
                 return i;
             }
         }
@@ -50,10 +50,7 @@ public class AccountDatabase {
      * @return true if found, false otherwise.
      */
     public boolean contains(Account account) {
-        if (find(account) != NOT_FOUND) {
-            return true;
-        }
-        return false;
+        return find(account) != NOT_FOUND;
         //overload if necessary
     }
 
@@ -95,6 +92,7 @@ public class AccountDatabase {
     } //remove the given account
 
     public boolean withdraw(Account account) {
+        int amountToWithdraw = dummyAccount.balance;
         if (contains(account)) {
         }
         return false;
@@ -102,6 +100,7 @@ public class AccountDatabase {
     // false if insufficient fund
 
     public void deposit(Account account) {
+
         if (contains(account)) {
 
         }
@@ -153,8 +152,17 @@ public class AccountDatabase {
     }
 
     public void printFeesAndInterests() {
+        if (numAcct == 0){
+            System.out.println("Account Database is empty!");
+            return;
+        }
+        System.out.println("*list of accounts with fee and monthly interest");
+        for (int i = 0; i < numAcct - 1; i++) {
+            for (int j = 0; j < numAcct - i - 1; j++) {
+
+            }
+        }
     } //calculate interests/fees
 
-    public void printUpdatedBalances() {
-    } //apply the interests/fees
+    public void printUpdatedBalances() {} //apply the interests/fees
 }

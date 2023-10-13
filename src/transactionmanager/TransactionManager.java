@@ -232,12 +232,28 @@ public class TransactionManager {
             String lastName     = inputs[3];
             String dateOfBirthStr  = inputs[4];
             double amount = Double.parseDouble(inputs[5]);
-
             if(amount <= 0) {
                 System.out.println("Deposit - amount cannot be" +
                         " 0 or negative.");
                 return;
             }
+            Profile dummyProfile = new Profile(firstName,lastName,dateOfBirthStr);
+            Account dummyAccount = new Account(Profile, amount, 0, 0) {
+                @Override
+                public double monthlyInterest() {
+                    return 0;
+                }
+
+                @Override
+                public double monthlyFee() {
+                    return 0;
+                }
+
+                @Override
+                public int compareTo(Account o) {
+                    return 0;
+                }
+            };
 
         } catch (NumberFormatException exp) {
             System.out.println("Not a valid amount.");
@@ -282,7 +298,7 @@ public class TransactionManager {
                 case "D" -> DepositToAccount(inputs);
                 case "W" -> WithdrawFromAccount(inputs);
                 case "P" -> {database.printSorted();}
-                case "PI" -> {}
+                case "PI" -> {database.printFeesAndInterests();}
                 case "UB" -> {}
                 case "Q"    -> {
                     System.out.println("Transaction Manager is terminated.");
