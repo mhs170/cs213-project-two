@@ -264,7 +264,7 @@ public class TransactionManager {
      * Runs the user-input TransactionManager
      */
     public void run(){
-        AccountDatabase database = new AccountDatabase();
+
         System.out.println("Transaction Manager is running.\n");
 
         AccountDatabase database =
