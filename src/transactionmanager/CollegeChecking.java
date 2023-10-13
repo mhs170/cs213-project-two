@@ -15,4 +15,15 @@ public class CollegeChecking extends Checking {
         super(holder, balance);
         this.campus = campus;
     }
+    /**
+     * Method to display college checking accounts with proper formatting
+     * @return String that displays account info
+     */
+    @Override
+    public String toString() {
+        return String.format("College Checking::%s %s %s::Balance $%.2f::%s",
+                holder.getFname(), holder.getLname(), holder.getDob(),
+                getBalance(), campus);
+    }
+    //College Checking::Roy Brooks 10/31/1999::Balance $2,909.10::NEWARK
 }

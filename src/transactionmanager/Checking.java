@@ -8,7 +8,8 @@ public class Checking extends Account {
 
     /**
      * Creates a new checking account
-     * @param holder Profile information of the account holder
+     *
+     * @param holder  Profile information of the account holder
      * @param balance account's balance
      */
     public Checking(Profile holder, double balance) {
@@ -17,6 +18,7 @@ public class Checking extends Account {
 
     /**
      * Method to calculate monthly interest
+     *
      * @return account's monthly interest
      */
     @Override
@@ -26,11 +28,12 @@ public class Checking extends Account {
 
     /**
      * Method to set the account's monthly fee
+     *
      * @return account's monthly fee, 0 if balance >= $1000
      */
     @Override
     public double monthlyFee() {
-        if (balance < BALANCE_TO_WAIVE_FEE){
+        if (balance < BALANCE_TO_WAIVE_FEE) {
             return MONTHLY_FEE;
         }
         return 0;
@@ -40,4 +43,16 @@ public class Checking extends Account {
     public int compareTo(Account o) {
         return 0;
     }
+
+    /**
+     * Method to checking accounts with proper formatting
+     * @return String that displays account info
+     */
+    @Override
+    public String toString() {
+        return String.format("Checking::%s %s %s::Balance $%.2f",
+                holder.getFname(), holder.getLname(), holder.getDob(),
+                getBalance());
+    }
+    //Checking::Jason Brown 3/31/1998::Balance $1,200.00
 }

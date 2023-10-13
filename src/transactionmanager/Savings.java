@@ -50,4 +50,21 @@ public class Savings extends Account {
     public int compareTo(Account o) {
         return 0;
     }
+
+    /**
+     * Method to display savings accounts with proper formatting
+     * @return String that displays account info
+     */
+    @Override
+    public String toString() {
+        if (isLoyal){
+            return String.format("Savings::%s %s %s::Balance $%.2f::is loyal",
+                    holder.getFname(), holder.getLname(), holder.getDob(),
+                    getBalance());
+        }
+        return String.format("Savings::%s %s %s::Balance $%.2f",
+                holder.getFname(), holder.getLname(), holder.getDob(),
+                getBalance());
+    }
+    //Savings::Jane Doe 10/1/1995::Balance $1,000.00
 }
