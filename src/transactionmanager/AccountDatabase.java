@@ -7,8 +7,9 @@ public class AccountDatabase {
 
     /**
      * Create a new Accounts Database
+     *
      * @param accounts initial array
-     * @param numAcct initial number of accounts
+     * @param numAcct  initial number of accounts
      */
     AccountDatabase(Account[] accounts, int numAcct) {
         this.accounts = accounts;
@@ -17,8 +18,10 @@ public class AccountDatabase {
 
     /**
      * Method that searches for an account in the database
+     *
      * @param account Account to search for
-     * @return index of the account in the array if found, otherwise returns -1.
+     * @return index of the account in the array if found, otherwise
+     * returns -1.
      */
     private int find(Account account) {
         for (int i = 0; i < numAcct; i++) {
@@ -42,6 +45,7 @@ public class AccountDatabase {
 
     /**
      * Method that checks if an account is in the database.
+     *
      * @param account account to search for
      * @return true if found, false otherwise.
      */
@@ -55,11 +59,12 @@ public class AccountDatabase {
 
     /**
      * Method that opens an account (adds account to end of array)
+     *
      * @param account account to add to database
      * @return true after account is added
      */
     public boolean open(Account account) {
-        if(contains(account)) {
+        if (contains(account)) {
             return false;
         }
         if (numAcct == accounts.length) {
@@ -72,6 +77,7 @@ public class AccountDatabase {
 
     /**
      * Method that closes an account (removes account from array)
+     *
      * @param account account to close/remove
      * @return true after account is removed, false if account is not found
      */
@@ -89,18 +95,23 @@ public class AccountDatabase {
     } //remove the given account
 
     public boolean withdraw(Account account) {
-        if (contains(account)){
+        if (contains(account)) {
         }
         return false;
     } //check if account exists using contains(), update balance, return
     // false if insufficient fund
 
     public void deposit(Account account) {
-        if (contains(account)){
+        if (contains(account)) {
 
         }
     } //check if account exists using contains(), update balance.
 
+    /**
+     * Method to display all the accounts in the account database, sorted
+     * by the account types. For the same account type, sort by the account
+     * holder’s profile (last name, first name and dob.)
+     */
     public void printSorted() {
         if (numAcct == 0) {
             System.out.println("Account Database is empty!");
@@ -109,7 +120,7 @@ public class AccountDatabase {
         System.out.println("*Accounts sorted by account type and profile.");
         for (int i = 0; i < numAcct - 1; i++) {
             for (int j = 0; j < numAcct - i - 1; j++) {
-                if (accounts[j].compareTo(accounts[j + 1]) > 0) {
+                if (compareAccountType(accounts[j], accounts[j + 1]) > 0) {
                     Account temp = accounts[j];
                     accounts[j] = accounts[j + 1];
                     accounts[j + 1] = temp;
@@ -121,6 +132,25 @@ public class AccountDatabase {
         }
         System.out.println("*end of list.");
     } //sort by account type and profile
+
+    /**
+     * Method that compares two account types alphabetically
+     * @param account1 1st account to compare
+     * @param account2 2nd account to compare
+     * @return result of the comparison
+     */
+    private int compareAccountType(Account account1, Account account2) {
+        int accountTypeComparison =
+                account1.getClass().getSimpleName().compareTo(account2.
+                        getClass().getSimpleName());
+
+        if (accountTypeComparison == 0) {
+            // If account types are the same, compare by profile information
+            return account1.getHolder().compareTo(account2.getHolder());
+        }
+
+        return accountTypeComparison;
+    }
 
     public void printFeesAndInterests() {
     } //calculate interests/fees

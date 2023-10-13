@@ -11,7 +11,7 @@ public class Savings extends Account {
     /**
      * Creates a new saving's account
      *
-     * @param holder  Profile information of the account holde
+     * @param holder  Profile information of the account holder
      * @param balance account's balance
      */
     public Savings(Profile holder, double balance, boolean isLoyal) {
