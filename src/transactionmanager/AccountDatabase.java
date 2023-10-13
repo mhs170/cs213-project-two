@@ -102,6 +102,24 @@ public class AccountDatabase {
     } //check if account exists using contains(), update balance.
 
     public void printSorted() {
+        if (numAcct == 0) {
+            System.out.println("Account Database is empty!");
+            return;
+        }
+        System.out.println("*Accounts sorted by account type and profile.");
+        for (int i = 0; i < numAcct - 1; i++) {
+            for (int j = 0; j < numAcct - i - 1; j++) {
+                if (accounts[j].compareTo(accounts[j + 1]) > 0) {
+                    Account temp = accounts[j];
+                    accounts[j] = accounts[j + 1];
+                    accounts[j + 1] = temp;
+                }
+            }
+        }
+        for (int i = 0; i < numAcct; i++) {
+            System.out.println(accounts[i]);
+        }
+        System.out.println("*end of list.");
     } //sort by account type and profile
 
     public void printFeesAndInterests() {

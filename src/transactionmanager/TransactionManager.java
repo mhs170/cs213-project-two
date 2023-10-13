@@ -260,11 +260,11 @@ public class TransactionManager {
             System.out.println("Not a valid amount.");
         }
     }
-
     /**
      * Runs the user-input TransactionManager
      */
     public void run(){
+        AccountDatabase database = new AccountDatabase();
         System.out.println("Transaction Manager is running.\n");
 
         AccountDatabase database =
@@ -281,7 +281,7 @@ public class TransactionManager {
                 case "C" -> CloseAccount(inputs);
                 case "D" -> DepositToAccount(inputs);
                 case "W" -> WithdrawFromAccount(inputs);
-                case "P" -> {}
+                case "P" -> {database.printSorted();}
                 case "PI" -> {}
                 case "UB" -> {}
                 case "Q"    -> {
