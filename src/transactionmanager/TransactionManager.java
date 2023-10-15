@@ -419,6 +419,10 @@ public class TransactionManager {
 
             Date dob = createDate(dateOfBirthStr);
 
+            if (!dateIsValid(dob)){
+                return;
+            }
+
             switch (accountType) {
                 case "C" -> CloseCheckingAccount(
                         accountType, firstName, lastName, dob,
