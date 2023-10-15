@@ -34,4 +34,20 @@ public abstract class Account implements Comparable<Account> {
     public double getBalance(){
         return balance;
     }
+
+    /**
+     * Getter method to output account's monthly fee
+     * @return account's monthly fee
+     */
+    public double getMonthlyFee(){
+        return monthlyFee();
+    }
+
+    /**
+     * Getter method to output account's monthly interest
+     * @return account's monthly interest
+     */
+    public double getMonthlyInterest(){
+        return monthlyInterest();
+    }
 }

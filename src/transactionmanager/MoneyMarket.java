@@ -2,7 +2,8 @@ package transactionmanager;
 
 public class MoneyMarket extends Savings {
     private int withdrawal; //number of withdrawals
-    public static final double ANNUAL_INTEREST_RATE = 0.045;
+    public static final double ANNUAL_INTEREST_RATE_IF_NOT_LOYAL = 0.045;
+    public static final double ANNUAL_INTEREST_RATE_IF_LOYAL = 0.0475;
     public static final double MONTHLY_FEE = 25;
 
     /**
@@ -20,6 +21,7 @@ public class MoneyMarket extends Savings {
 
     /**
      * Method to compare if objects are equal
+     *
      * @param obj the account to compare
      * @return true if equal, false otherwise
      */
@@ -36,18 +38,31 @@ public class MoneyMarket extends Savings {
     }
 
     /**
+     * Method to calculate a money market savings account's interest
+     * @return monthly interest
+     */
+    @Override
+    public double monthlyInterest() {
+        if (isLoyal) {
+            return (ANNUAL_INTEREST_RATE_IF_LOYAL * balance) / MONTHS_IN_YEAR;
+        }
+        return (ANNUAL_INTEREST_RATE_IF_NOT_LOYAL * balance) / MONTHS_IN_YEAR;
+    }
+
+    /**
      * Method to display Money Market accounts with proper formatting
+     *
      * @return String that displays account info
      */
     @Override
     public String toString() {
         if (isLoyal) {
             return String.format("Money Market::Savings::%s %s %s::Balance " +
-                            "$%.2f::is loyal::withdrawal: %d",
+                            "$%,.2f::is loyal::withdrawal: %d",
                     holder.getFname(), holder.getLname(), holder.getDob(),
                     getBalance(), withdrawal);
         }
-        return String.format("Money Market::Savings::%s %s %s::Balance $%" +
+        return String.format("Money Market::Savings::%s %s %s::Balance $%," +
                         ".2f::withdrawal: %d",
                 holder.getFname(), holder.getLname(), holder.getDob(),
                 getBalance(), withdrawal);

@@ -177,6 +177,11 @@ public class AccountDatabase {
         return accountTypeComparison;
     }
 
+    /**
+     * Method to display all the accounts in the account database, the same
+     * order with the P command. In addition, display the calculated fees
+     * and monthly interests based on current account balances.
+     */
     public void printFeesAndInterests() {
         if (numAcct == 0) {
             System.out.println("Account Database is empty!");
@@ -185,10 +190,42 @@ public class AccountDatabase {
         System.out.println("*list of accounts with fee and monthly interest");
         for (int i = 0; i < numAcct - 1; i++) {
             for (int j = 0; j < numAcct - i - 1; j++) {
-
+                if (compareAccountType(accounts[j], accounts[j + 1]) > 0) {
+                    Account temp = accounts[j];
+                    accounts[j] = accounts[j + 1];
+                    accounts[j + 1] = temp;
+                }
             }
         }
-    } //calculate interests/fees
+        for (int i = 0; i < numAcct; i++) {
+            if (accounts[i].getClass().getSimpleName().equals("Checking")) {
+                System.out.printf("%s::fee $%.2f::monthly interest $%.2f",
+                        accounts[i], accounts[i].getMonthlyFee(),
+                        accounts[i].getMonthlyInterest());
+                System.out.println();
+            }
+            if (accounts[i].getClass().getSimpleName().equals(
+                    "CollegeChecking")) {
+                System.out.printf("%s::fee $%.2f::monthly interest $%.2f",
+                        accounts[i], accounts[i].getMonthlyFee(),
+                        accounts[i].getMonthlyInterest());
+                System.out.println();
+            }
+            if (accounts[i].getClass().getSimpleName().equals("Savings")) {
+                System.out.printf("%s::fee $%.2f::monthly interest $%.2f",
+                        accounts[i], accounts[i].getMonthlyFee(),
+                        accounts[i].getMonthlyInterest());
+                System.out.println();
+            }
+            if (accounts[i].getClass().getSimpleName().equals("MoneyMarket")) {
+                System.out.printf("%s::fee $%.2f::monthly interest $%.2f",
+                        accounts[i], accounts[i].getMonthlyFee(),
+                        accounts[i].getMonthlyInterest());
+                System.out.println();
+            }
+        }
+        System.out.println("*end of list.");
+    }
 
     public void printUpdatedBalances() {
     } //apply the interests/fees

@@ -7,9 +7,10 @@ public class CollegeChecking extends Checking {
 
     /**
      * Creates a new college checking account
-     * @param holder Profile information of the account holder
+     *
+     * @param holder  Profile information of the account holder
      * @param balance Balance of the college checking account
-     * @param campus Campus code associated with account
+     * @param campus  Campus code associated with account
      */
     public CollegeChecking(Profile holder, double balance, Campus campus) {
         super(holder, balance);
@@ -18,11 +19,12 @@ public class CollegeChecking extends Checking {
 
     /**
      * Method to display college checking accounts with proper formatting
+     *
      * @return String that displays account info
      */
     @Override
     public String toString() {
-        return String.format("College Checking::%s %s %s::Balance $%.2f::%s",
+        return String.format("College Checking::%s %s %s::Balance $%,.2f::%s",
                 holder.getFname(), holder.getLname(), holder.getDob(),
                 getBalance(), campus);
     }

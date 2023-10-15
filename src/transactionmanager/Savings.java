@@ -28,9 +28,9 @@ public class Savings extends Account {
     @Override
     public double monthlyInterest() {
         if (isLoyal) {
-            return INTEREST_IF_LOYAL / MONTHS_IN_YEAR;
+            return (INTEREST_IF_LOYAL * balance) / MONTHS_IN_YEAR;
         }
-        return ANNUAL_INTEREST_RATE / MONTHS_IN_YEAR;
+        return (ANNUAL_INTEREST_RATE * balance) / MONTHS_IN_YEAR;
     }
 
     /**
@@ -48,6 +48,7 @@ public class Savings extends Account {
 
     /**
      * Method to compare if objects are equal
+     *
      * @param obj the account to compare
      * @return true if equal, false otherwise
      */
@@ -59,7 +60,7 @@ public class Savings extends Account {
         if (!(obj instanceof Savings)) {
             return false;
         }
-        if(obj instanceof MoneyMarket) {
+        if (obj instanceof MoneyMarket) {
             return false;
         }
         Savings compareThis = (Savings) obj;
@@ -73,16 +74,18 @@ public class Savings extends Account {
 
     /**
      * Method to display savings accounts with proper formatting
+     *
      * @return String that displays account info
      */
     @Override
     public String toString() {
-        if (isLoyal){
-            return String.format("Savings::%s %s %s::Balance $%.2f::is loyal",
+        if (isLoyal) {
+            return String.format("Savings::%s %s %s::Balance $%,.2f::is " +
+                            "loyal",
                     holder.getFname(), holder.getLname(), holder.getDob(),
                     getBalance());
         }
-        return String.format("Savings::%s %s %s::Balance $%.2f",
+        return String.format("Savings::%s %s %s::Balance $%,.2f",
                 holder.getFname(), holder.getLname(), holder.getDob(),
                 getBalance());
     }

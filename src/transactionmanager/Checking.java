@@ -23,7 +23,7 @@ public class Checking extends Account {
      */
     @Override
     public double monthlyInterest() {
-        return ANNUAL_INTEREST_RATE / MONTHS_IN_YEAR;
+        return (ANNUAL_INTEREST_RATE * balance) / MONTHS_IN_YEAR;
     }
 
     /**
@@ -68,7 +68,7 @@ public class Checking extends Account {
      */
     @Override
     public String toString() {
-        return String.format("Checking::%s %s %s::Balance $%.2f",
+        return String.format("Checking::%s %s %s::Balance $%,.2f",
                 holder.getFname(), holder.getLname(), holder.getDob(),
                 getBalance());
     }
