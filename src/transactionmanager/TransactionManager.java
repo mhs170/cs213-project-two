@@ -72,16 +72,16 @@ public class TransactionManager {
      * @param date the date to validate
      * @return true if valid, false otherwise
      */
-    private boolean dateIsValid(Date date) {
+    private boolean dateIsValid(Date date, String dateStr) {
         if (date == null) {
             System.out.printf("DOB invalid: %s not a" +
-                    " valid calendar date!%n", date);
+                    " valid calendar date!%n", dateStr);
             return false;
         }
 
         if (date.isToday() || date.isInFuture()) {
             System.out.printf("DOB invalid: %s cannot" +
-                    " be today or a future day.%n", date);
+                    " be today or a future day.%n", dateStr);
             return false;
         }
         return true;
@@ -282,7 +282,7 @@ public class TransactionManager {
 
 
             Date dateOfBirth = createDate(dateOfBirthStr);
-            if (!dateIsValid(dateOfBirth)) return;
+            if (!dateIsValid(dateOfBirth, dateOfBirthStr)) return;
 
             if (initialDeposit <= 0) {
                 System.out.println("Initial deposit cannot be 0 or negative" +
@@ -466,7 +466,7 @@ public class TransactionManager {
             }
 
             Date dateOfBirth = createDate(dateOfBirthStr);
-            if (!dateIsValid(dateOfBirth)) return;
+            if (!dateIsValid(dateOfBirth, dateOfBirthStr)) return;
 
             Profile dummyProfile = new Profile(firstName, lastName,
                     dateOfBirth);
@@ -520,7 +520,7 @@ public class TransactionManager {
             }
 
             Date dateOfBirth = createDate(dateOfBirthStr);
-            if (!dateIsValid(dateOfBirth)) return;
+            if (!dateIsValid(dateOfBirth, dateOfBirthStr)) return;
 
             Profile profile = new Profile(firstName, lastName, dateOfBirth);
 
