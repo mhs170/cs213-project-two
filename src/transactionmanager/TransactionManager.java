@@ -424,6 +424,7 @@ public class TransactionManager {
                     database.printFeesAndInterests();
                 }
                 case "UB" -> {
+                    database.printUpdatedBalances();
                 }
                 case "Q" -> {
                     System.out.println("Transaction Manager is terminated.");

@@ -228,6 +228,30 @@ public class AccountDatabase {
         System.out.println("*end of list.");
     }
 
+    /**
+     * Method to update and display the account balance for all accounts by
+     * applying the fees and interests earned.
+     */
     public void printUpdatedBalances() {
+        if (numAcct == 0) {
+            System.out.println("Account Database is empty!");
+            return;
+        }
+        System.out.println("*list of accounts with fees and interests " +
+                "applied.");
+        for (int i = 0; i < numAcct - 1; i++) {
+            for (int j = 0; j < numAcct - i - 1; j++) {
+                if (compareAccountType(accounts[j], accounts[j + 1]) > 0) {
+                    Account temp = accounts[j];
+                    accounts[j] = accounts[j + 1];
+                    accounts[j + 1] = temp;
+                }
+            }
+        }
+        for (int i = 0; i < numAcct; i++) {
+            accounts[i].balance += accounts[i].getMonthlyInterest();
+            accounts[i].balance -= accounts[i].getMonthlyFee();
+            System.out.println(accounts[i]);
+        }
     } //apply the interests/fees
 }
