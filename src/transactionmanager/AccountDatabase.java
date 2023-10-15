@@ -82,7 +82,7 @@ public class AccountDatabase {
         int accountIndex = find(account);
         if (accountIndex != NOT_FOUND) {
             for (int i = accountIndex; i < accounts.length - 1; i++) {
-                accounts[i] = accounts[i + 1]; //removes the event
+                accounts[i] = accounts[i + 1];
             }
             accounts[accounts.length - 1] = null; //sets last element to null
             numAcct -= 1;
@@ -253,5 +253,6 @@ public class AccountDatabase {
             accounts[i].balance -= accounts[i].getMonthlyFee();
             System.out.println(accounts[i]);
         }
+        System.out.println("*end of list.");
     } //apply the interests/fees
 }

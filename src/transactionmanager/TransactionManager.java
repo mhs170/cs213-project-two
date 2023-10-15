@@ -272,16 +272,130 @@ public class TransactionManager {
     }
 
     /**
+     * Method that prints result of close method
+     *
+     * @param profile     Profile associated with account
+     * @param accountType type of account
+     * @param closed      if account is closed, true
+     */
+    private void printCloseStatus(
+            Profile profile, String accountType, boolean closed
+    ) {
+        if (closed) {
+            String status = "has been closed.";
+            printStatus(profile, accountType, status);
+        }
+    }
+
+    /**
+     * Close Checking account
+     *
+     * @param accountType account type
+     * @param firstName   first name of holder
+     * @param lastName    last name of holder
+     * @param dob         date of birth of holder
+     */
+    private void CloseCheckingAccount(String accountType, String firstName,
+                                      String lastName, Date dob,
+                                      AccountDatabase database) {
+        Profile holder = new Profile(firstName, lastName, dob);
+        Checking account = new Checking(holder, 0);
+        boolean close = database.close(account);
+        printCloseStatus(holder, accountType, close);
+    }
+
+    /**
+     * Close College Checking account
+     *
+     * @param accountType account type
+     * @param firstName   first name of holder
+     * @param lastName    last name of holder
+     * @param dob         date of birth of holder
+     */
+    private void CloseCollegeCheckingAccount(String accountType,
+                                             String firstName,
+                                             String lastName, Date dob,
+                                             AccountDatabase database) {
+        Profile holder = new Profile(firstName, lastName, dob);
+        CollegeChecking account = new CollegeChecking(holder, 0,
+                Campus.NEWARK);
+        boolean close = database.close(account);
+        printCloseStatus(holder, accountType, close);
+    }
+
+    /**
+     * Close Savings account
+     *
+     * @param accountType account type
+     * @param firstName   first name of holder
+     * @param lastName    last name of holder
+     * @param dob         date of birth of holder
+     */
+    private void CloseSavings(String accountType, String firstName,
+                              String lastName, Date dob,
+                              AccountDatabase database) {
+        Profile holder = new Profile(firstName, lastName, dob);
+        Savings account = new Savings(holder, 0, false);
+        boolean close = database.close(account);
+        printCloseStatus(holder, accountType, close);
+    }
+
+    /**
+     * Close Money Market Savings account
+     *
+     * @param accountType account type
+     * @param firstName   first name of holder
+     * @param lastName    last name of holder
+     * @param dob         date of birth of holder
+     */
+    private void CloseMoneyMarket(String accountType, String firstName,
+                                  String lastName, Date dob,
+                                  AccountDatabase database) {
+        Profile holder = new Profile(firstName, lastName, dob);
+        MoneyMarket account = new MoneyMarket(holder, 0, false
+                , 0);
+        boolean close = database.close(account);
+        printCloseStatus(holder, accountType, close);
+    }
+
+    /**
      * Close an account
      *
      * @param inputs user inputted strings that identify account
      */
-    private void CloseAccount(String[] inputs) {
-        String accountType = inputs[1];
-        String firstName = inputs[2];
-        String lastName = inputs[3];
-        String dateOfBirthStr = inputs[4];
+    private void CloseAccount(String[] inputs, AccountDatabase database) {
+        try {
+            String accountType = inputs[1];
+            String firstName = inputs[2];
+            String lastName = inputs[3];
+            String dateOfBirthStr = inputs[4];
 
+            Date dob = createDate(dateOfBirthStr);
+
+            switch (accountType) {
+                case "C" -> CloseCheckingAccount(
+                        accountType, firstName, lastName, dob,
+                        database
+                );
+                case "CC" -> CloseCollegeCheckingAccount(
+                        accountType, firstName, lastName, dob,
+                        database
+                );
+                case "S" -> CloseSavings(
+                        accountType, firstName, lastName, dob,
+                        database
+                );
+                case "MM" -> CloseMoneyMarket(
+                        accountType, firstName, lastName, dob,
+                        database
+                );
+
+                default -> System.out.println("Invalid command!");
+            }
+
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Missing data for closing an account.");
+        }
 
     }
 
@@ -312,12 +426,10 @@ public class TransactionManager {
             Account dummyAccount;
             switch (accountType) {
                 case "C" -> dummyAccount = new Checking(dummyProfile, amount);
-                case "CC" ->
-                        dummyAccount = new CollegeChecking(dummyProfile,
-                                amount, Campus.NEWARK);
-                case "S" ->
-                        dummyAccount = new Savings(dummyProfile, amount,
-                                false);
+                case "CC" -> dummyAccount = new CollegeChecking(dummyProfile,
+                        amount, Campus.NEWARK);
+                case "S" -> dummyAccount = new Savings(dummyProfile, amount,
+                        false);
                 case "MM" ->
                         dummyAccount = new MoneyMarket(dummyProfile, amount
                                 , false, 0);
@@ -414,7 +526,7 @@ public class TransactionManager {
 
             switch (command) {
                 case "O" -> OpenAccount(inputs, database);
-                case "C" -> CloseAccount(inputs);
+                case "C" -> CloseAccount(inputs, database);
                 case "D" -> DepositToAccount(inputs, database);
                 case "W" -> WithdrawFromAccount(inputs, database);
                 case "P" -> {
