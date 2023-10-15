@@ -27,6 +27,22 @@ public class TransactionManager {
         return ageDifference >= 16;
     }
 
+    private boolean underTwentyFour(Date dob) {
+        Calendar today = Calendar.getInstance();
+        int currentYear = today.get(Calendar.YEAR);
+        int currentMonth = today.get(Calendar.MONTH) + 1;
+        int currentDay = today.get(Calendar.DAY_OF_MONTH);
+
+        int ageDifference = currentYear - dob.getYear();
+
+        if (currentMonth < dob.getMonth() || (currentMonth == dob.getMonth()
+                && currentDay < dob.getDay())) {
+            ageDifference--;
+        }
+
+        return ageDifference < 24;
+    }
+
     /**
      * Create and return Date object based on mm/dd/yyyy string input.
      * If input is invalid, then return null.
@@ -166,6 +182,10 @@ public class TransactionManager {
             int campusCode,
             AccountDatabase database
     ) {
+        if (!underTwentyFour(dateOfBirth)){
+            System.out.println("DOB invalid: " + dateOfBirth + " over 24.");
+            return;
+        }
         Campus campus;
         switch (campusCode) {
             case 0 -> campus = Campus.NEWBRUNSWICK;
