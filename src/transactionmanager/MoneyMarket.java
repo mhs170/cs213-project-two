@@ -19,6 +19,23 @@ public class MoneyMarket extends Savings {
     }
 
     /**
+     * Method to compare if objects are equal
+     * @param obj the account to compare
+     * @return true if equal, false otherwise
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof MoneyMarket)) {
+            return false;
+        }
+        MoneyMarket compareThis = (MoneyMarket) obj;
+        return this.getHolder().equals(compareThis.getHolder());
+    }
+
+    /**
      * Method to display Money Market accounts with proper formatting
      * @return String that displays account info
      */

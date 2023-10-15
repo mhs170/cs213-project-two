@@ -15,6 +15,7 @@ public class CollegeChecking extends Checking {
         super(holder, balance);
         this.campus = campus;
     }
+
     /**
      * Method to display college checking accounts with proper formatting
      * @return String that displays account info

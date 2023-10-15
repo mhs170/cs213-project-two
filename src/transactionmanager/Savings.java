@@ -46,6 +46,26 @@ public class Savings extends Account {
         return 0;
     }
 
+    /**
+     * Method to compare if objects are equal
+     * @param obj the account to compare
+     * @return true if equal, false otherwise
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof Savings)) {
+            return false;
+        }
+        if(obj instanceof MoneyMarket) {
+            return false;
+        }
+        Savings compareThis = (Savings) obj;
+        return this.getHolder().equals(compareThis.getHolder());
+    }
+
     @Override
     public int compareTo(Account o) {
         return 0;

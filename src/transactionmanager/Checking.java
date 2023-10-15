@@ -39,13 +39,31 @@ public class Checking extends Account {
         return 0;
     }
 
+    /**
+     * Method to compare if objects are equal
+     * @param obj the account to compare
+     * @return true if equal, false otherwise
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof Checking)) {
+            return false;
+        }
+        Checking compareThis = (Checking) obj;
+        return this.getHolder().equals(compareThis.getHolder());
+    }
+
+
     @Override
     public int compareTo(Account o) {
         return 0;
     }
 
     /**
-     * Method to checking accounts with proper formatting
+     * Method to print checking accounts with proper formatting
      * @return String that displays account info
      */
     @Override
