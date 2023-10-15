@@ -256,10 +256,6 @@ public class TransactionManager {
             );
             return;
         }
-        if (!overSixteen(dateOfBirth)){
-            System.out.println("DOB invalid: " + dateOfBirth + " under 16.");
-            return;
-        }
         Profile profile = new Profile(firstName, lastName, dateOfBirth);
         MoneyMarket account = new MoneyMarket(profile, initialDeposit,
                 true, 0);
@@ -283,6 +279,11 @@ public class TransactionManager {
 
             Date dateOfBirth = createDate(dateOfBirthStr);
             if (!dateIsValid(dateOfBirth, dateOfBirthStr)) return;
+
+            if (!overSixteen(dateOfBirth)){
+                System.out.println("DOB invalid: " + dateOfBirth + " under 16.");
+                return;
+            }
 
             if (initialDeposit <= 0) {
                 System.out.println("Initial deposit cannot be 0 or negative" +
