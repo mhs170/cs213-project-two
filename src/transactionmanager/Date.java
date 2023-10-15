@@ -175,6 +175,21 @@ public class Date implements Comparable<Date> {
         return this.compareTo(currDate) > 0;
     }
 
+    public int getYearsSince() {
+        if(this.isInFuture()) return -1;
+
+        Calendar today = Calendar.getInstance();
+        int currYear = today.get(Calendar.YEAR);
+        int currMonth = today.get(Calendar.MONTH) + 1;
+        int currDay = today.get(Calendar.DAY_OF_MONTH);
+
+        int diff = currYear - this.year;
+        if(this.month > currMonth || (this.month == currMonth && this.day > currDay)) {
+            diff--;
+        }
+        return diff;
+    }
+
     /**
      * Return if the Date is within 6 months in the future
      * @return true if within 6 months, false otherwise
