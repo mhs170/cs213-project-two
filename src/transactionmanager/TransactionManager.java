@@ -347,6 +347,9 @@ public class TransactionManager {
                                       AccountDatabase database) {
         Profile holder = new Profile(firstName, lastName, dob);
         Checking account = new Checking(holder, 0);
+        if (!database.contains(account)){
+            printStatus(holder, accountType, "is not in the database");
+        }
         boolean close = database.close(account);
         printCloseStatus(holder, accountType, close);
     }
@@ -419,6 +422,10 @@ public class TransactionManager {
 
             Date dob = createDate(dateOfBirthStr);
             if(!dateIsValid(dob, dateOfBirthStr)) return;
+
+            if (!dateIsValid(dob, dateOfBirthStr)){
+                return;
+            }
 
             switch (accountType) {
                 case "C" -> CloseCheckingAccount(
