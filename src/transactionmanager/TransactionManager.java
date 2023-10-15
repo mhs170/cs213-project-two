@@ -1,8 +1,31 @@
 package transactionmanager;
 
+import java.util.Calendar;
 import java.util.Scanner;
 
 public class TransactionManager {
+
+    /**
+     * Method to test if account holder is over 16
+     *
+     * @param dob date of birth
+     * @return true if over 16, false otherwise
+     */
+    private boolean overSixteen(Date dob) {
+        Calendar today = Calendar.getInstance();
+        int currentYear = today.get(Calendar.YEAR);
+        int currentMonth = today.get(Calendar.MONTH) + 1;
+        int currentDay = today.get(Calendar.DAY_OF_MONTH);
+
+        int ageDifference = currentYear - dob.getYear();
+
+        if (currentMonth < dob.getMonth() || (currentMonth == dob.getMonth()
+                && currentDay < dob.getDay())) {
+            ageDifference--;
+        }
+
+        return ageDifference >= 16;
+    }
 
     /**
      * Create and return Date object based on mm/dd/yyyy string input.
@@ -211,6 +234,10 @@ public class TransactionManager {
             System.out.println(
                     "Minimum of $2000 to open a Money Market account."
             );
+            return;
+        }
+        if (!overSixteen(dateOfBirth)){
+            System.out.println("DOB invalid: " + dateOfBirth + " under 16.");
             return;
         }
         Profile profile = new Profile(firstName, lastName, dateOfBirth);
