@@ -419,7 +419,7 @@ public class TransactionManager {
 
             Date dob = createDate(dateOfBirthStr);
 
-            if (!dateIsValid(dob)){
+            if (!dateIsValid(dob, dateOfBirthStr)){
                 return;
             }
 
