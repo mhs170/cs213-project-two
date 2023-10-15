@@ -61,6 +61,7 @@ public class Profile implements Comparable<Profile> {
         return this.fname.equalsIgnoreCase(compareThis.fname) &&
                 this.lname.equalsIgnoreCase(compareThis.lname) &&
                 this.dob.equals(compareThis.dob);
+
     }
 
     /**
