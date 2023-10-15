@@ -52,6 +52,9 @@ public class Checking extends Account {
         if (!(obj instanceof Checking)) {
             return false;
         }
+        if(obj instanceof CollegeChecking) {
+            return false;
+        }
         Checking compareThis = (Checking) obj;
         return this.getHolder().equals(compareThis.getHolder());
     }

@@ -349,7 +349,7 @@ public class TransactionManager {
         Profile holder = new Profile(firstName, lastName, dob);
         Checking account = new Checking(holder, 0);
         if (!database.contains(account)){
-            printStatus(holder, accountType, "is not in the database");
+            printStatus(holder, accountType, "is not in the database.");
         }
         boolean close = database.close(account);
         printCloseStatus(holder, accountType, close);
@@ -370,6 +370,9 @@ public class TransactionManager {
         Profile holder = new Profile(firstName, lastName, dob);
         CollegeChecking account = new CollegeChecking(holder, 0,
                 Campus.NEWARK);
+        if (!database.contains(account)){
+            printStatus(holder, accountType, "is not in the database.");
+        }
         boolean close = database.close(account);
         printCloseStatus(holder, accountType, close);
     }
@@ -387,6 +390,9 @@ public class TransactionManager {
                               AccountDatabase database) {
         Profile holder = new Profile(firstName, lastName, dob);
         Savings account = new Savings(holder, 0, false);
+        if (!database.contains(account)){
+            printStatus(holder, accountType, "is not in the database.");
+        }
         boolean close = database.close(account);
         printCloseStatus(holder, accountType, close);
     }
@@ -405,6 +411,9 @@ public class TransactionManager {
         Profile holder = new Profile(firstName, lastName, dob);
         MoneyMarket account = new MoneyMarket(holder, 0, false
                 , 0);
+        if (!database.contains(account)){
+            printStatus(holder, accountType, "is not in the database.");
+        }
         boolean close = database.close(account);
         printCloseStatus(holder, accountType, close);
     }

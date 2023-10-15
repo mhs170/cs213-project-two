@@ -18,6 +18,23 @@ public class CollegeChecking extends Checking {
     }
 
     /**
+     * Method to compare if objects are equal
+     * @param obj the account to compare
+     * @return true if equal, false otherwise
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof CollegeChecking)) {
+            return false;
+        }
+        Checking compareThis = (Checking) obj;
+        return this.getHolder().equals(compareThis.getHolder());
+    }
+
+    /**
      * Method to display college checking accounts with proper formatting
      *
      * @return String that displays account info

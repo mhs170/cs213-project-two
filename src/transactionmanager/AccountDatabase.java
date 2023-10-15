@@ -51,7 +51,6 @@ public class AccountDatabase {
      */
     public boolean contains(Account account) {
         return find(account) != NOT_FOUND;
-        //overload if necessary
     }
 
     /**
@@ -64,6 +63,22 @@ public class AccountDatabase {
         if (contains(account)) {
             return false;
         }
+
+        //can't have both a C and CC account:
+        if(account instanceof CollegeChecking) {
+            Checking account2 = new Checking(
+                    account.getHolder(), account.getBalance()
+            );
+            if(contains(account2)) return false;
+        }
+        if(account instanceof Checking) {
+            CollegeChecking account2 = new CollegeChecking(
+                    account.getHolder(), account.getBalance(),
+                    Campus.NEW_BRUNSWICK
+            );
+            if(contains(account2)) return false;
+        }
+
         if (numAcct == accounts.length) {
             grow();
         }
