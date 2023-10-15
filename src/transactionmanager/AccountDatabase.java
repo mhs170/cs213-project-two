@@ -91,6 +91,13 @@ public class AccountDatabase {
         return false;
     } //remove the given account
 
+    /**
+     * Method used to withdraw money from account
+     *
+     * @param account account to withdraw from
+     * @return false if amount to withdraw is greater than balance, true
+     * otherwise
+     */
     public boolean withdraw(Account account) {
 
         //checking if account exists already happened in
@@ -101,15 +108,15 @@ public class AccountDatabase {
         double amountToWithdraw = account.getBalance();
         Account actualAccount = accounts[find(account)];
 
-        if(actualAccount.balance < amountToWithdraw) {
+        if (actualAccount.balance < amountToWithdraw) {
             return false;
         }
 
         actualAccount.balance -= amountToWithdraw;
 
         //money markets < $2000 are set to not loyal
-        if(actualAccount instanceof MoneyMarket) {
-            if(actualAccount.balance < 2000) {
+        if (actualAccount instanceof MoneyMarket) {
+            if (actualAccount.balance < 2000) {
                 ((MoneyMarket) actualAccount).isLoyal = false;
             }
         }
@@ -119,10 +126,9 @@ public class AccountDatabase {
     // false if insufficient fund
 
     public void deposit(Account account) {
-
-        if (contains(account)) {
-
-        }
+        double amountToDeposit = account.getBalance();
+        Account actualAccount = accounts[find(account)];
+        actualAccount.balance += amountToDeposit;
     } //check if account exists using contains(), update balance.
 
     /**
@@ -153,6 +159,7 @@ public class AccountDatabase {
 
     /**
      * Method that compares two account types alphabetically
+     *
      * @param account1 1st account to compare
      * @param account2 2nd account to compare
      * @return result of the comparison
@@ -171,7 +178,7 @@ public class AccountDatabase {
     }
 
     public void printFeesAndInterests() {
-        if (numAcct == 0){
+        if (numAcct == 0) {
             System.out.println("Account Database is empty!");
             return;
         }
@@ -183,5 +190,6 @@ public class AccountDatabase {
         }
     } //calculate interests/fees
 
-    public void printUpdatedBalances() {} //apply the interests/fees
+    public void printUpdatedBalances() {
+    } //apply the interests/fees
 }

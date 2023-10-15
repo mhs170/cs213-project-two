@@ -7,13 +7,14 @@ public class TransactionManager {
     /**
      * Create and return Date object based on mm/dd/yyyy string input.
      * If input is invalid, then return null.
+     *
      * @param date a string in mm/dd/yyyy format
      * @return Date object if valid date string, null if invalid
      */
     private Date createDate(String date) {
         String dateFormatRegex =
                 "^(\\d{1,2}(/)\\d{1,2}(/)\\d{4})$";
-        if(!date.matches(dateFormatRegex)) return null;
+        if (!date.matches(dateFormatRegex)) return null;
 
         String[] splitDate = date.split("/");
         int month = Integer.parseInt(splitDate[0]);
@@ -21,24 +22,25 @@ public class TransactionManager {
         int year = Integer.parseInt(splitDate[2]);
 
         Date dateObj = new Date(year, month, day);
-        if(!dateObj.isValid()) return null;
+        if (!dateObj.isValid()) return null;
 
         return dateObj;
     }
 
     /**
      * Validate a date
+     *
      * @param date the date to validate
      * @return true if valid, false otherwise
      */
     private boolean dateIsValid(Date date) {
-        if(date == null) {
+        if (date == null) {
             System.out.printf("DOB invalid: %s not a" +
                     " valid calendar date!%n", date);
             return false;
         }
 
-        if(date.isToday() || date.isInFuture()) {
+        if (date.isToday() || date.isInFuture()) {
             System.out.printf("DOB invalid: %s cannot" +
                     " be today or a future day.%n", date);
             return false;
@@ -46,10 +48,12 @@ public class TransactionManager {
         return true;
     }
 
-    /** Print some account status
-     *  @param profile the profile of the account
-     *  @param accountType the account type
-     *  @param status the status to print afterwards
+    /**
+     * Print some account status
+     *
+     * @param profile     the profile of the account
+     * @param accountType the account type
+     * @param status      the status to print afterwards
      */
     private void printStatus(
             Profile profile, String accountType, String status
@@ -64,37 +68,49 @@ public class TransactionManager {
 
     /**
      * Print that the account is opened, or it's already in database
-     * @param profile the profile of the account
+     *
+     * @param profile     the profile of the account
      * @param accountType the account type
      */
     private void printOpenStatus(
             Profile profile, String accountType, boolean opened
     ) {
         String status;
-        if(opened) status = "opened.";
+        if (opened) status = "opened.";
         else status = "is already in the database.";
         printStatus(profile, accountType, status);
     }
 
     /**
      * Print that the account is opened, or it's already in database
-     * @param profile the profile of the account
+     *
+     * @param profile     the profile of the account
      * @param accountType the account type
      */
     private void printWithdrawStatus(
             Profile profile, String accountType, boolean withdrawSuccess
     ) {
         String status;
-        if(withdrawSuccess) status = "Withdraw - balance updated.";
+        if (withdrawSuccess) status = "Withdraw - balance updated.";
         else status = "Withdraw - insufficient fund.";
+        printStatus(profile, accountType, status);
+    }
+
+    private void printDepositStatus(
+            Profile profile, String accountType, boolean depositSuccess
+    ) {
+        String status;
+        if (depositSuccess) status = "Deposit - balance updated.";
+        else status = "Deposit - amount cannot be 0 or negative.";
         printStatus(profile, accountType, status);
     }
 
     /**
      * Create checking account
-     * @param firstName first name of user
-     * @param lastName last name of user
-     * @param dateOfBirth DOB of user, in past
+     *
+     * @param firstName      first name of user
+     * @param lastName       last name of user
+     * @param dateOfBirth    DOB of user, in past
      * @param initialDeposit initial deposit for account
      */
     private void OpenCheckingAccount(
@@ -112,11 +128,12 @@ public class TransactionManager {
 
     /**
      * Create college checking account
-     * @param firstName first name of user
-     * @param lastName last name of user
-     * @param dateOfBirth DOB of user, in past
+     *
+     * @param firstName      first name of user
+     * @param lastName       last name of user
+     * @param dateOfBirth    DOB of user, in past
      * @param initialDeposit initial deposit for account
-     * @param campusCode 0, 1, 2 codes for different campuses
+     * @param campusCode     0, 1, 2 codes for different campuses
      */
     private void OpenCollegeCheckingAccount(
             String firstName,
@@ -127,7 +144,7 @@ public class TransactionManager {
             AccountDatabase database
     ) {
         Campus campus;
-        switch(campusCode) {
+        switch (campusCode) {
             case 0 -> campus = Campus.NEWBRUNSWICK;
             case 1 -> campus = Campus.NEWARK;
             case 2 -> campus = Campus.CAMDEN;
@@ -137,18 +154,20 @@ public class TransactionManager {
             }
         }
         Profile profile = new Profile(firstName, lastName, dateOfBirth);
-        CollegeChecking account = new CollegeChecking(profile, initialDeposit, campus);
+        CollegeChecking account = new CollegeChecking(profile,
+                initialDeposit, campus);
         boolean openSuccess = database.open(account);
         printOpenStatus(profile, "CC", openSuccess);
     }
 
     /**
      * Create savings account
-     * @param firstName first name of user
-     * @param lastName last name of user
-     * @param dateOfBirth DOB of user, in past
+     *
+     * @param firstName      first name of user
+     * @param lastName       last name of user
+     * @param dateOfBirth    DOB of user, in past
      * @param initialDeposit initial deposit for account
-     * @param loyalCustomer 0 or 1 based on whether customer is loyal
+     * @param loyalCustomer  0 or 1 based on whether customer is loyal
      */
     private void OpenSavingsAccount(
             String firstName,
@@ -159,13 +178,11 @@ public class TransactionManager {
             AccountDatabase database
     ) {
         boolean isLoyal;
-        if(loyalCustomer == 0) {
+        if (loyalCustomer == 0) {
             isLoyal = false;
-        }
-        else if (loyalCustomer == 1) {
+        } else if (loyalCustomer == 1) {
             isLoyal = true;
-        }
-        else {
+        } else {
             System.out.println("Invalid command.");
             return;
         }
@@ -177,9 +194,10 @@ public class TransactionManager {
 
     /**
      * Create money market account
-     * @param firstName first name of user
-     * @param lastName last name of user
-     * @param dateOfBirth DOB of user, in past
+     *
+     * @param firstName      first name of user
+     * @param lastName       last name of user
+     * @param dateOfBirth    DOB of user, in past
      * @param initialDeposit initial deposit for account
      */
     private void OpenMoneyMarketAccount(
@@ -189,7 +207,7 @@ public class TransactionManager {
             double initialDeposit,
             AccountDatabase database
     ) {
-        if(initialDeposit < 2000.00) {
+        if (initialDeposit < 2000.00) {
             System.out.println(
                     "Minimum of $2000 to open a Money Market account."
             );
@@ -204,22 +222,24 @@ public class TransactionManager {
 
     /**
      * Parses input and runs the proper create account method
+     *
      * @param inputs array of user inputted strings
      */
     private void OpenAccount(String[] inputs, AccountDatabase database) {
         try {
-            String accountType  = inputs[1];
-            String firstName    = inputs[2];
-            String lastName     = inputs[3];
-            String dateOfBirthStr  = inputs[4];
+            String accountType = inputs[1];
+            String firstName = inputs[2];
+            String lastName = inputs[3];
+            String dateOfBirthStr = inputs[4];
             double initialDeposit = Double.parseDouble(inputs[5]);
 
 
             Date dateOfBirth = createDate(dateOfBirthStr);
-            if(!dateIsValid(dateOfBirth)) return;
+            if (!dateIsValid(dateOfBirth)) return;
 
-            if(initialDeposit <= 0) {
-                System.out.println("Initial deposit cannot be 0 or negative.");
+            if (initialDeposit <= 0) {
+                System.out.println("Initial deposit cannot be 0 or negative" +
+                        ".");
                 return;
             }
 
@@ -244,67 +264,76 @@ public class TransactionManager {
                 );
                 default -> System.out.println("Invalid command!");
             }
-        } catch(IndexOutOfBoundsException exp) {
+        } catch (IndexOutOfBoundsException exp) {
             System.out.println("Missing data for opening an account.");
-        } catch(NumberFormatException exp) {
+        } catch (NumberFormatException exp) {
             System.out.println("Not a valid amount.");
         }
     }
 
     /**
      * Close an account
+     *
      * @param inputs user inputted strings that identify account
      */
     private void CloseAccount(String[] inputs) {
-        String accountType  = inputs[1];
-        String firstName    = inputs[2];
-        String lastName     = inputs[3];
-        String dateOfBirthStr  = inputs[4];
+        String accountType = inputs[1];
+        String firstName = inputs[2];
+        String lastName = inputs[3];
+        String dateOfBirthStr = inputs[4];
 
 
     }
 
     /**
      * Deposit to an account
+     *
      * @param inputs user inputted strings that identify account
      */
-    private void DepositToAccount(String[] inputs) {
+    private void DepositToAccount(String[] inputs, AccountDatabase database) {
         try {
-            String accountType  = inputs[1];
-            String firstName    = inputs[2];
-            String lastName     = inputs[3];
-            String dateOfBirthStr  = inputs[4];
+            String accountType = inputs[1];
+            String firstName = inputs[2];
+            String lastName = inputs[3];
+            String dateOfBirthStr = inputs[4];
             double amount = Double.parseDouble(inputs[5]);
-            if(amount <= 0) {
+
+            if (amount <= 0) {
                 System.out.println("Deposit - amount cannot be" +
                         " 0 or negative.");
                 return;
             }
 
             Date dateOfBirth = createDate(dateOfBirthStr);
-            if(dateOfBirth == null) {
-                System.out.printf("DOB invalid: %s not a" +
-                        " valid calendar date!%n", dateOfBirthStr);
-                return;
+            if (!dateIsValid(dateOfBirth)) return;
+
+            Profile dummyProfile = new Profile(firstName, lastName,
+                    dateOfBirth);
+            Account dummyAccount;
+            switch (accountType) {
+                case "C" -> dummyAccount = new Checking(dummyProfile, amount);
+                case "CC" ->
+                        dummyAccount = new CollegeChecking(dummyProfile,
+                                amount, Campus.NEWARK);
+                case "S" ->
+                        dummyAccount = new Savings(dummyProfile, amount,
+                                false);
+                case "MM" ->
+                        dummyAccount = new MoneyMarket(dummyProfile, amount
+                                , false, 0);
+                default -> {
+                    System.out.println("Invalid command.");
+                    return;
+                }
             }
 
-            Profile dummyProfile = new Profile(firstName,lastName,dateOfBirth);
-            Account dummyAccount = new Account(dummyProfile, amount, 0, 0) {
-                @Override
-                public double monthlyInterest() {
-                    return 0;
-                }
-
-                @Override
-                public double monthlyFee() {
-                    return 0;
-                }
-
-                @Override
-                public int compareTo(Account o) {
-                    return 0;
-                }
-            };
+            if (!(database.contains(dummyAccount))) {
+                printStatus(dummyProfile, accountType,
+                        "is not in the database.");
+                return;
+            }
+            database.deposit(dummyAccount);
+            printDepositStatus(dummyProfile, accountType, true);
 
         } catch (NumberFormatException exp) {
             System.out.println("Not a valid amount.");
@@ -313,30 +342,31 @@ public class TransactionManager {
 
     /**
      * Withdraw from an account
+     *
      * @param inputs user inputted strings that identify account
      */
     private void WithdrawFromAccount(String[] inputs,
                                      AccountDatabase database) {
         try {
-            String accountType  = inputs[1];
-            String firstName    = inputs[2];
-            String lastName     = inputs[3];
-            String dateOfBirthStr  = inputs[4];
+            String accountType = inputs[1];
+            String firstName = inputs[2];
+            String lastName = inputs[3];
+            String dateOfBirthStr = inputs[4];
             double amount = Double.parseDouble(inputs[5]);
 
-            if(amount <= 0) {
+            if (amount <= 0) {
                 System.out.println("Withdraw -" +
                         " amount cannot be 0 or negative.");
                 return;
             }
 
             Date dateOfBirth = createDate(dateOfBirthStr);
-            if(!dateIsValid(dateOfBirth)) return;
+            if (!dateIsValid(dateOfBirth)) return;
 
             Profile profile = new Profile(firstName, lastName, dateOfBirth);
 
             Account dummy;
-            switch(accountType) {
+            switch (accountType) {
                 case "C" -> dummy = new Checking(
                         profile, amount);
                 case "CC" -> dummy = new CollegeChecking(
@@ -351,7 +381,7 @@ public class TransactionManager {
                 }
             }
 
-            if(!(database.contains(dummy))) {
+            if (!(database.contains(dummy))) {
                 printStatus(profile, accountType,
                         "is not in the database.");
                 return;
@@ -364,10 +394,11 @@ public class TransactionManager {
             System.out.println("Not a valid amount.");
         }
     }
+
     /**
      * Runs the user-input TransactionManager
      */
-    public void run(){
+    public void run() {
 
         System.out.println("Transaction Manager is running.\n");
 
@@ -375,24 +406,31 @@ public class TransactionManager {
                 new AccountDatabase(new Account[]{}, 0);
 
         Scanner scanner = new Scanner(System.in);
-        scannerLoop: while (scanner.hasNextLine()) {
-            String commandLine  = scanner.nextLine();
-            String[] inputs     = commandLine.split("\\s+");
-            String command      = inputs[0];
+        scannerLoop:
+        while (scanner.hasNextLine()) {
+            String commandLine = scanner.nextLine();
+            String[] inputs = commandLine.split("\\s+");
+            String command = inputs[0];
 
             switch (command) {
                 case "O" -> OpenAccount(inputs, database);
                 case "C" -> CloseAccount(inputs);
-                case "D" -> DepositToAccount(inputs);
+                case "D" -> DepositToAccount(inputs, database);
                 case "W" -> WithdrawFromAccount(inputs, database);
-                case "P" -> {database.printSorted();}
-                case "PI" -> {database.printFeesAndInterests();}
-                case "UB" -> {}
-                case "Q"    -> {
+                case "P" -> {
+                    database.printSorted();
+                }
+                case "PI" -> {
+                    database.printFeesAndInterests();
+                }
+                case "UB" -> {
+                }
+                case "Q" -> {
                     System.out.println("Transaction Manager is terminated.");
                     break scannerLoop;
                 }
-                case "" -> {}
+                case "" -> {
+                }
                 default -> System.out.println("Invalid command!");
             }
         }
