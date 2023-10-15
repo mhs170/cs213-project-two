@@ -27,23 +27,67 @@ public class TransactionManager {
     }
 
     /**
-     * Print that the account is opened, or it's already in database
-     * @param profile the profile of the account
-     * @param accountType the account type
+     * Validate a date
+     * @param date the date to validate
+     * @return true if valid, false otherwise
+     */
+    private boolean dateIsValid(Date date) {
+        if(date == null) {
+            System.out.printf("DOB invalid: %s not a" +
+                    " valid calendar date!%n", date);
+            return false;
+        }
+
+        if(date.isToday() || date.isInFuture()) {
+            System.out.printf("DOB invalid: %s cannot" +
+                    " be today or a future day.%n", date);
+            return false;
+        }
+        return true;
+    }
+
+    /** Print some account status
+     *  @param profile the profile of the account
+     *  @param accountType the account type
+     *  @param status the status to print afterwards
      */
     private void printStatus(
-            Profile profile, String accountType, boolean opened
+            Profile profile, String accountType, String status
     ) {
-        String extra;
-        if(opened) extra = "opened.";
-        else extra = "is already in the database.";
-
         System.out.printf("%s %s %s(%s) %s\n",
                 profile.getFname(),
                 profile.getLname(),
                 profile.getDob(),
                 accountType,
-                extra);
+                status);
+    }
+
+    /**
+     * Print that the account is opened, or it's already in database
+     * @param profile the profile of the account
+     * @param accountType the account type
+     */
+    private void printOpenStatus(
+            Profile profile, String accountType, boolean opened
+    ) {
+        String status;
+        if(opened) status = "opened.";
+        else status = "is already in the database.";
+        printStatus(profile, accountType, status);
+    }
+
+    /**
+     * Print that the account is opened, or it's already in database
+     * @param profile the profile of the account
+     * @param accountType the account type
+     */
+    private void printWithdrawStatus(
+            Profile profile, String accountType, boolean withdrawSuccess
+    ) {
+        String status;
+        if(withdrawSuccess) status = "Withdraw - balance updated.";
+        else status = "Withdraw - insufficient fund.";
+        printStatus(profile, accountType, status);
     }
 
     /**
@@ -63,7 +107,7 @@ public class TransactionManager {
         Profile profile = new Profile(firstName, lastName, dateOfBirth);
         Checking account = new Checking(profile, initialDeposit);
         boolean openSuccess = database.open(account);
-        printStatus(profile, "C", openSuccess);
+        printOpenStatus(profile, "C", openSuccess);
     }
 
     /**
@@ -95,7 +139,7 @@ public class TransactionManager {
         Profile profile = new Profile(firstName, lastName, dateOfBirth);
         CollegeChecking account = new CollegeChecking(profile, initialDeposit, campus);
         boolean openSuccess = database.open(account);
-        printStatus(profile, "CC", openSuccess);
+        printOpenStatus(profile, "CC", openSuccess);
     }
 
     /**
@@ -128,7 +172,7 @@ public class TransactionManager {
         Profile profile = new Profile(firstName, lastName, dateOfBirth);
         Savings account = new Savings(profile, initialDeposit, isLoyal);
         boolean openSuccess = database.open(account);
-        printStatus(profile, "S", openSuccess);
+        printOpenStatus(profile, "S", openSuccess);
     }
 
     /**
@@ -152,9 +196,10 @@ public class TransactionManager {
             return;
         }
         Profile profile = new Profile(firstName, lastName, dateOfBirth);
-        MoneyMarket account = new MoneyMarket(profile, initialDeposit, true, 0);
+        MoneyMarket account = new MoneyMarket(profile, initialDeposit,
+                true, 0);
         boolean openSuccess = database.open(account);
-        printStatus(profile, "MM", openSuccess);
+        printOpenStatus(profile, "MM", openSuccess);
     }
 
     /**
@@ -171,11 +216,7 @@ public class TransactionManager {
 
 
             Date dateOfBirth = createDate(dateOfBirthStr);
-            if(dateOfBirth == null) {
-                System.out.printf("DOB invalid: %s not a" +
-                        " valid calendar date!%n", dateOfBirthStr);
-                return;
-            }
+            if(!dateIsValid(dateOfBirth)) return;
 
             if(initialDeposit <= 0) {
                 System.out.println("Initial deposit cannot be 0 or negative.");
@@ -205,6 +246,8 @@ public class TransactionManager {
             }
         } catch(IndexOutOfBoundsException exp) {
             System.out.println("Missing data for opening an account.");
+        } catch(NumberFormatException exp) {
+            System.out.println("Not a valid amount.");
         }
     }
 
@@ -237,8 +280,16 @@ public class TransactionManager {
                         " 0 or negative.");
                 return;
             }
-            Profile dummyProfile = new Profile(firstName,lastName,dateOfBirthStr);
-            Account dummyAccount = new Account(Profile, amount, 0, 0) {
+
+            Date dateOfBirth = createDate(dateOfBirthStr);
+            if(dateOfBirth == null) {
+                System.out.printf("DOB invalid: %s not a" +
+                        " valid calendar date!%n", dateOfBirthStr);
+                return;
+            }
+
+            Profile dummyProfile = new Profile(firstName,lastName,dateOfBirth);
+            Account dummyAccount = new Account(dummyProfile, amount, 0, 0) {
                 @Override
                 public double monthlyInterest() {
                     return 0;
@@ -264,13 +315,50 @@ public class TransactionManager {
      * Withdraw from an account
      * @param inputs user inputted strings that identify account
      */
-    private void WithdrawFromAccount(String[] inputs) {
+    private void WithdrawFromAccount(String[] inputs,
+                                     AccountDatabase database) {
         try {
             String accountType  = inputs[1];
             String firstName    = inputs[2];
             String lastName     = inputs[3];
             String dateOfBirthStr  = inputs[4];
             double amount = Double.parseDouble(inputs[5]);
+
+            if(amount <= 0) {
+                System.out.println("Withdraw -" +
+                        " amount cannot be 0 or negative.");
+                return;
+            }
+
+            Date dateOfBirth = createDate(dateOfBirthStr);
+            if(!dateIsValid(dateOfBirth)) return;
+
+            Profile profile = new Profile(firstName, lastName, dateOfBirth);
+
+            Account dummy;
+            switch(accountType) {
+                case "C" -> dummy = new Checking(
+                        profile, amount);
+                case "CC" -> dummy = new CollegeChecking(
+                        profile, amount, Campus.NEWARK);
+                case "S" -> dummy = new Savings(
+                        profile, amount, false);
+                case "MM" -> dummy = new MoneyMarket(
+                        profile, amount, false, 0);
+                default -> {
+                    System.out.println("Invalid command.");
+                    return;
+                }
+            }
+
+            if(!(database.contains(dummy))) {
+                printStatus(profile, accountType,
+                        "is not in the database.");
+                return;
+            }
+
+            boolean isSuccess = database.withdraw(dummy);
+            printWithdrawStatus(profile, accountType, isSuccess);
 
         } catch (NumberFormatException exp) {
             System.out.println("Not a valid amount.");
@@ -296,7 +384,7 @@ public class TransactionManager {
                 case "O" -> OpenAccount(inputs, database);
                 case "C" -> CloseAccount(inputs);
                 case "D" -> DepositToAccount(inputs);
-                case "W" -> WithdrawFromAccount(inputs);
+                case "W" -> WithdrawFromAccount(inputs, database);
                 case "P" -> {database.printSorted();}
                 case "PI" -> {database.printFeesAndInterests();}
                 case "UB" -> {}

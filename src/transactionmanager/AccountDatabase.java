@@ -25,7 +25,7 @@ public class AccountDatabase {
      */
     private int find(Account account) {
         for (int i = 0; i < numAcct; i++) {
-            if (accounts[i].compareTo(account) == 0) {
+            if (accounts[i].equals(account)) {
                 return i;
             }
         }
@@ -92,10 +92,29 @@ public class AccountDatabase {
     } //remove the given account
 
     public boolean withdraw(Account account) {
-        int amountToWithdraw = dummyAccount.balance;
-        if (contains(account)) {
+
+        //checking if account exists already happened in
+        //TransactionManger
+
+        //account is a dummy var of the correct type
+
+        double amountToWithdraw = account.getBalance();
+        Account actualAccount = accounts[find(account)];
+
+        if(actualAccount.balance < amountToWithdraw) {
+            return false;
         }
-        return false;
+
+        actualAccount.balance -= amountToWithdraw;
+
+        //money markets < $2000 are set to not loyal
+        if(actualAccount instanceof MoneyMarket) {
+            if(actualAccount.balance < 2000) {
+                ((MoneyMarket) actualAccount).isLoyal = false;
+            }
+        }
+
+        return true;
     } //check if account exists using contains(), update balance, return
     // false if insufficient fund
 
