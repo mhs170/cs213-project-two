@@ -188,7 +188,7 @@ public class TransactionManager {
         }
         Campus campus;
         switch (campusCode) {
-            case 0 -> campus = Campus.NEWBRUNSWICK;
+            case 0 -> campus = Campus.NEW_BRUNSWICK;
             case 1 -> campus = Campus.NEWARK;
             case 2 -> campus = Campus.CAMDEN;
             default -> {
@@ -418,6 +418,7 @@ public class TransactionManager {
             String dateOfBirthStr = inputs[4];
 
             Date dob = createDate(dateOfBirthStr);
+            if(!dateIsValid(dob, dateOfBirthStr)) return;
 
             switch (accountType) {
                 case "C" -> CloseCheckingAccount(

@@ -141,7 +141,7 @@ public class AccountDatabase {
             System.out.println("Account Database is empty!");
             return;
         }
-        System.out.println("*Accounts sorted by account type and profile.");
+        System.out.println("\n*Accounts sorted by account type and profile.");
         for (int i = 0; i < numAcct - 1; i++) {
             for (int j = 0; j < numAcct - i - 1; j++) {
                 if (compareAccountType(accounts[j], accounts[j + 1]) > 0) {
@@ -154,7 +154,7 @@ public class AccountDatabase {
         for (int i = 0; i < numAcct; i++) {
             System.out.println(accounts[i]);
         }
-        System.out.println("*end of list.");
+        System.out.println("*end of list.\n");
     } //sort by account type and profile
 
     /**
@@ -187,7 +187,7 @@ public class AccountDatabase {
             System.out.println("Account Database is empty!");
             return;
         }
-        System.out.println("*list of accounts with fee and monthly interest");
+        System.out.println("\n*list of accounts with fee and monthly interest");
         for (int i = 0; i < numAcct - 1; i++) {
             for (int j = 0; j < numAcct - i - 1; j++) {
                 if (compareAccountType(accounts[j], accounts[j + 1]) > 0) {
@@ -225,7 +225,7 @@ public class AccountDatabase {
                 System.out.println();
             }
         }
-        System.out.println("*end of list.");
+        System.out.println("*end of list.\n");
     }
 
     /**
@@ -237,7 +237,7 @@ public class AccountDatabase {
             System.out.println("Account Database is empty!");
             return;
         }
-        System.out.println("*list of accounts with fees and interests " +
+        System.out.println("\n*list of accounts with fees and interests " +
                 "applied.");
         for (int i = 0; i < numAcct - 1; i++) {
             for (int j = 0; j < numAcct - i - 1; j++) {
@@ -253,6 +253,6 @@ public class AccountDatabase {
             accounts[i].balance -= accounts[i].getMonthlyFee();
             System.out.println(accounts[i]);
         }
-        System.out.println("*end of list.");
+        System.out.println("*end of list.\n");
     } //apply the interests/fees
 }

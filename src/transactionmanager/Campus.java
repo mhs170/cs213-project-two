@@ -1,7 +1,7 @@
 package transactionmanager;
 
 public enum Campus {
-    NEWBRUNSWICK(0),
+    NEW_BRUNSWICK(0),
     NEWARK(1),
     CAMDEN(2);
     private final int campusCode;
