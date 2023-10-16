@@ -554,7 +554,7 @@ public class TransactionManager {
             if (!dateIsValid(dateOfBirth, dateOfBirthStr)) return;
 
             Profile profile = new Profile(firstName, lastName, dateOfBirth);
-            int withdrawal = 0;
+
 
             Account dummy;
             switch (accountType) {
@@ -565,7 +565,7 @@ public class TransactionManager {
                 case "S" -> dummy = new Savings(
                         profile, amount, false);
                 case "MM" -> dummy = new MoneyMarket(
-                        profile, amount, false, withdrawal+1);
+                        profile, amount, false, 0);
                 default -> {
                     System.out.println("Invalid command.");
                     return;

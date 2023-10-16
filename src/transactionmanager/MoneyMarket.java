@@ -26,6 +26,22 @@ public class MoneyMarket extends Savings {
     }
 
     /**
+     * Method to output number of withdrawals
+     * @return number of withdrawals
+     */
+    public int getWithdrawal(){
+        return this.withdrawal;
+    }
+
+    /**
+     * Method to set and update number of withdrawals
+     * @param withdrawal number of withdrawals
+     */
+    public void setWithdrawals(int withdrawal){
+        this.withdrawal = withdrawal;
+    }
+
+    /**
      * Method to compare if objects are equal
      *
      * @param obj the account to compare
@@ -65,7 +81,7 @@ public class MoneyMarket extends Savings {
         if (balance >= AMOUNT_TO_WAIVE_FEE){
             monthlyFee = 0;
         }
-        if (withdrawal > 3){
+        if (getWithdrawal() > 3){
             monthlyFee += 10;
         }
         return monthlyFee;

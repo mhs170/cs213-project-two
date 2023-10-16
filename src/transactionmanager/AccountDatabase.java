@@ -140,6 +140,9 @@ public class AccountDatabase {
             if (actualAccount.balance < 2000) {
                 ((MoneyMarket) actualAccount).isLoyal = false;
             }
+            int num = ((MoneyMarket) actualAccount).getWithdrawal();
+            num++;
+            ((MoneyMarket) actualAccount).setWithdrawals(num);
         }
 
         return true;
