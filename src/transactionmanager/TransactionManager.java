@@ -531,6 +531,9 @@ public class TransactionManager {
         } catch (NumberFormatException exp) {
             System.out.println("Not a valid amount.");
         }
+        catch (ArrayIndexOutOfBoundsException e){
+            System.out.println("Missing data for depositing to an account.");
+        }
     }
 
     /**
@@ -587,6 +590,9 @@ public class TransactionManager {
 
         } catch (NumberFormatException exp) {
             System.out.println("Not a valid amount.");
+        }
+        catch (ArrayIndexOutOfBoundsException e){
+            System.out.println("Missing data for withdrawing from account.");
         }
     }
 
