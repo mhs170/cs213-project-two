@@ -301,126 +301,127 @@ public class Date implements Comparable<Date> {
         return month + "/" + day + "/" + year;
     }
 
-    /**
-     * Testbed main, runs tests for date
-     * @param args command line input, unused
-     */
-    public static void main(String[] args) {
-        testLowYear();
-        testNonLeap();
-        testLeap();
-        testMonthOutOfRange();
-        test31Days(); //multiple test cases
-        test30Days(); //multiple test cases
-    }
-
-    /**
-     * Compare test output and expected output, print result of test
-     *
-     * @param date           the date inputted to the test
-     * @param expectedOutput the expected output of the test
-     * @param actualOutput   the actual output of the test
-     */
-    private static void testResult(Date date, boolean expectedOutput,
-                                   boolean actualOutput) {
-        System.out.println("Test input: " + date);
-        System.out.println("Expected output: " + expectedOutput);
-        System.out.println("Actual output: " + actualOutput);
-
-        if (expectedOutput != actualOutput) {
-            System.out.println("(FAIl) \n");
-        } else {
-            System.out.println("(PASS) \n");
-        }
-    }
-
-    /**
-     * Test case: Check if a year starts before 1900
-     */
-    private static void testLowYear() {
-        System.out.printf("** Test case #%d: A year should not start " +
-                "before 1900\n", currentTestCase++);
-
-        Date date = new Date("2/29/0");
-        boolean expected = false;
-        boolean actual = date.isValid();
-        testResult(date, expected, actual);
-    }
-
-
-    /**
-     * Test case: Check if Feb has 28 days in a nonleap year
-     */
-    private static void testNonLeap() {
-        System.out.printf("** Test case #%d: # of days in feb on a non-leap" +
-                " year is 28\n", currentTestCase++);
-
-        Date date = new Date("2/29/2023");
-        boolean expected = false;
-        boolean actual = date.isValid();
-        testResult(date, expected, actual);
-    }
-
-    /**
-     * Test case: # of days in feb on a leap year is 29
-     */
-    private static void testLeap() {
-        System.out.printf("** Test case #%d: # of days in feb on a leap " +
-                "year is 29\n", currentTestCase++);
-
-        Date date = new Date("2/29/2024");
-        boolean expected = true;
-        boolean actual = date.isValid();
-        testResult(date, expected, actual);
-    }
-
-    /**
-     * Test case: The range for a valid month is 1-12
-     */
-    private static void testMonthOutOfRange() {
-        System.out.printf("** Test case #%d: The range for a valid month is" +
-                " 1-12\n", currentTestCase++);
-
-        Date date = new Date("13/21/2020");
-        boolean actual = date.isValid();
-        boolean expected = false;
-        testResult(date, expected, actual);
-    }
-
-    /**
-     * Multiple test cases: For the month, January, March, May, July,
-     * August, October and December, each has 31 days
-     */
-    private static void test31Days() {
-        int[] monthsWith31Days = new int[]{JAN, MAR, MAY, JUL, AUG, OCT, DEC};
-
-        for (int month : monthsWith31Days) {
-            System.out.printf("** Test case #%d: The month %s has 31 days.\n",
-                    currentTestCase++, monthToString(month));
-
-            Date date = new Date(month + "/31/2023");
-            boolean actual = date.isValid();
-            boolean expected = true;
-            testResult(date, expected, actual);
-        }
-    }
-
-    /**
-     * Multiple test cases: For the month, April, June, September and
-     * November, each has 30 days
-     */
-    private static void test30Days() {
-        int[] monthsWith31Days = new int[]{APR, JUN, SEP, NOV};
-
-        for (int month : monthsWith31Days) {
-            System.out.printf("** Test case #%d: The month %s has 30 days.\n",
-                    currentTestCase++, monthToString(month));
-
-            Date date = new Date(month + "/31/2023");
-            boolean actual = date.isValid();
-            boolean expected = false;
-            testResult(date, expected, actual);
-        }
-    }
+    //testbed main no longer needed as we are using junit
+//    /**
+//     * Testbed main, runs tests for date
+//     * @param args command line input, unused
+//     */
+//    public static void main(String[] args) {
+//        testLowYear();
+//        testNonLeap();
+//        testLeap();
+//        testMonthOutOfRange();
+//        test31Days(); //multiple test cases
+//        test30Days(); //multiple test cases
+//    }
+//
+//    /**
+//     * Compare test output and expected output, print result of test
+//     *
+//     * @param date           the date inputted to the test
+//     * @param expectedOutput the expected output of the test
+//     * @param actualOutput   the actual output of the test
+//     */
+//    private static void testResult(Date date, boolean expectedOutput,
+//                                   boolean actualOutput) {
+//        System.out.println("Test input: " + date);
+//        System.out.println("Expected output: " + expectedOutput);
+//        System.out.println("Actual output: " + actualOutput);
+//
+//        if (expectedOutput != actualOutput) {
+//            System.out.println("(FAIl) \n");
+//        } else {
+//            System.out.println("(PASS) \n");
+//        }
+//    }
+//
+//    /**
+//     * Test case: Check if a year starts before 1900
+//     */
+//    private static void testLowYear() {
+//        System.out.printf("** Test case #%d: A year should not start " +
+//                "before 1900\n", currentTestCase++);
+//
+//        Date date = new Date("2/29/0");
+//        boolean expected = false;
+//        boolean actual = date.isValid();
+//        testResult(date, expected, actual);
+//    }
+//
+//
+//    /**
+//     * Test case: Check if Feb has 28 days in a nonleap year
+//     */
+//    private static void testNonLeap() {
+//        System.out.printf("** Test case #%d: # of days in feb on a non-leap" +
+//                " year is 28\n", currentTestCase++);
+//
+//        Date date = new Date("2/29/2023");
+//        boolean expected = false;
+//        boolean actual = date.isValid();
+//        testResult(date, expected, actual);
+//    }
+//
+//    /**
+//     * Test case: # of days in feb on a leap year is 29
+//     */
+//    private static void testLeap() {
+//        System.out.printf("** Test case #%d: # of days in feb on a leap " +
+//                "year is 29\n", currentTestCase++);
+//
+//        Date date = new Date("2/29/2024");
+//        boolean expected = true;
+//        boolean actual = date.isValid();
+//        testResult(date, expected, actual);
+//    }
+//
+//    /**
+//     * Test case: The range for a valid month is 1-12
+//     */
+//    private static void testMonthOutOfRange() {
+//        System.out.printf("** Test case #%d: The range for a valid month is" +
+//                " 1-12\n", currentTestCase++);
+//
+//        Date date = new Date("13/21/2020");
+//        boolean actual = date.isValid();
+//        boolean expected = false;
+//        testResult(date, expected, actual);
+//    }
+//
+//    /**
+//     * Multiple test cases: For the month, January, March, May, July,
+//     * August, October and December, each has 31 days
+//     */
+//    private static void test31Days() {
+//        int[] monthsWith31Days = new int[]{JAN, MAR, MAY, JUL, AUG, OCT, DEC};
+//
+//        for (int month : monthsWith31Days) {
+//            System.out.printf("** Test case #%d: The month %s has 31 days.\n",
+//                    currentTestCase++, monthToString(month));
+//
+//            Date date = new Date(month + "/31/2023");
+//            boolean actual = date.isValid();
+//            boolean expected = true;
+//            testResult(date, expected, actual);
+//        }
+//    }
+//
+//    /**
+//     * Multiple test cases: For the month, April, June, September and
+//     * November, each has 30 days
+//     */
+//    private static void test30Days() {
+//        int[] monthsWith31Days = new int[]{APR, JUN, SEP, NOV};
+//
+//        for (int month : monthsWith31Days) {
+//            System.out.printf("** Test case #%d: The month %s has 30 days.\n",
+//                    currentTestCase++, monthToString(month));
+//
+//            Date date = new Date(month + "/31/2023");
+//            boolean actual = date.isValid();
+//            boolean expected = false;
+//            testResult(date, expected, actual);
+//        }
+//    }
 
 }
