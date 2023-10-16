@@ -280,6 +280,7 @@ public class TransactionManager {
      * Parses input and runs the proper create account method
      *
      * @param inputs array of user inputted strings
+     * @param database the account database to modify
      */
     private void OpenAccount(String[] inputs, AccountDatabase database) {
         try {
@@ -435,6 +436,7 @@ public class TransactionManager {
      * Close an account
      *
      * @param inputs user inputted strings that identify account
+     * @param database the account database to modify
      */
     private void CloseAccount(String[] inputs, AccountDatabase database) {
         try {
@@ -481,6 +483,7 @@ public class TransactionManager {
      * Deposit to an account
      *
      * @param inputs user inputted strings that identify account
+     *  @param database the account database to modify
      */
     private void DepositToAccount(String[] inputs, AccountDatabase database) {
         try {
@@ -534,6 +537,7 @@ public class TransactionManager {
      * Withdraw from an account
      *
      * @param inputs user inputted strings that identify account
+     * @param database the account database to modify
      */
     private void WithdrawFromAccount(String[] inputs,
                                      AccountDatabase database) {
