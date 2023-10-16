@@ -1,5 +1,10 @@
 package transactionmanager;
 
+/**
+ * Checking account class with constants for different fees and rates
+ *
+ * @author Mohammed Salama, Dakshal Panicker
+ */
 public class Checking extends Account {
     public static final double ANNUAL_INTEREST_RATE = 0.01;
     public static final double MONTHLY_FEE = 12;
@@ -59,7 +64,12 @@ public class Checking extends Account {
         return this.getHolder().equals(compareThis.getHolder());
     }
 
-
+    /**
+     * Method to compare objects
+     * @param o the object to be compared.
+     * @return -1 if this is before object, 0 if this is equivalent, 1 if
+     * higher than object
+     */
     @Override
     public int compareTo(Account o) {
         return 0;

@@ -1,5 +1,10 @@
 package transactionmanager;
 
+/**
+ * Enum class for representing 3 campuses
+ *
+ * @author Mohammed Salama, Dakshal Panicker
+ */
 public enum Campus {
     NEW_BRUNSWICK(0),
     NEWARK(1),

@@ -4,6 +4,11 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+/**
+ * Contains unit tests for AccountDatabase
+ *
+ * @author Mohammed Salama, Dakshal Panicker
+ */
 public class AccountDatabaseTest {
 
     @Test

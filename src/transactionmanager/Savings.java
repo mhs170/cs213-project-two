@@ -1,5 +1,10 @@
 package transactionmanager;
 
+/**
+ * Savings account class with constants for different fees and rates
+ *
+ * @author Mohammed Salama, Dakshal Panicker
+ */
 public class Savings extends Account {
     protected boolean isLoyal; //loyal customer status
     public static final double ANNUAL_INTEREST_RATE = 0.04;

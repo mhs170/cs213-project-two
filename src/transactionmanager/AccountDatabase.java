@@ -1,7 +1,11 @@
 package transactionmanager;
-
 import java.text.DecimalFormat;
-
+/**
+ * Account database for storing accounts with helper methods for
+ * opening, closing, finding accounts, etc.
+ *
+ * @author Mohammed Salama, Dakshal Panicker
+ */
 public class AccountDatabase {
     private static final int NOT_FOUND = -1;
     private Account[] accounts; //list of various types of accounts
@@ -67,18 +71,18 @@ public class AccountDatabase {
         }
 
         //can't have both a C and CC account:
-        if (account instanceof CollegeChecking) {
+        if(account instanceof CollegeChecking) {
             Checking account2 = new Checking(
                     account.getHolder(), account.getBalance()
             );
-            if (contains(account2)) return false;
+            if(contains(account2)) return false;
         }
-        if (account instanceof Checking) {
+        if(account instanceof Checking) {
             CollegeChecking account2 = new CollegeChecking(
                     account.getHolder(), account.getBalance(),
                     Campus.NEW_BRUNSWICK
             );
-            if (contains(account2)) return false;
+            if(contains(account2)) return false;
         }
 
         if (numAcct == accounts.length) {
@@ -205,8 +209,7 @@ public class AccountDatabase {
             System.out.println("Account Database is empty!");
             return;
         }
-        System.out.println("\n*list of accounts with fee and monthly " +
-                "interest");
+        System.out.println("\n*list of accounts with fee and monthly interest");
         for (int i = 0; i < numAcct - 1; i++) {
             for (int j = 0; j < numAcct - i - 1; j++) {
                 if (compareAccountType(accounts[j], accounts[j + 1]) > 0) {

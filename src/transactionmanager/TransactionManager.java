@@ -3,6 +3,13 @@ package transactionmanager;
 import java.util.Calendar;
 import java.util.Scanner;
 
+
+/**
+ *  This class parses user input and interacts with the backend model,
+ *  then prints output
+ *
+ * @author Mohammed Salama, Dakshal Panicker
+ */
 public class TransactionManager {
 
     /**
@@ -27,6 +34,12 @@ public class TransactionManager {
         return ageDifference >= 16;
     }
 
+    /**
+     * Method to test if account holder is under 24
+     *
+     * @param dob date of birth
+     * @return true if under 24, false otherwise
+     */
     private boolean underTwentyFour(Date dob) {
         Calendar today = Calendar.getInstance();
         int currentYear = today.get(Calendar.YEAR);

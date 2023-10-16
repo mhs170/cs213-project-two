@@ -1,5 +1,10 @@
 package transactionmanager;
 
+/**
+ * Money Market class with constants for different fees and rates
+ *
+ * @author Mohammed Salama, Dakshal Panicker
+ */
 public class MoneyMarket extends Savings {
     private int withdrawal; //number of withdrawals
     public static final double ANNUAL_INTEREST_RATE_IF_NOT_LOYAL = 0.045;

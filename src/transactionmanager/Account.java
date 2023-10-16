@@ -1,5 +1,10 @@
 package transactionmanager;
 
+/**
+ * Abstract class that all accounts extend
+ *
+ * @author Mohammed Salama, Dakshal Panicker
+ */
 public abstract class Account implements Comparable<Account> {
     protected Profile holder;
     protected double balance;
@@ -23,6 +28,10 @@ public abstract class Account implements Comparable<Account> {
         this.monthlyFee();
     }
 
+    /**
+     * Getter method to output holder profile
+     * @return account's holder
+     */
     public Profile getHolder(){
         return holder;
     }
