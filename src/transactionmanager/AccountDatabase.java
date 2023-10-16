@@ -284,6 +284,9 @@ public class AccountDatabase {
         for (int i = 0; i < numAcct; i++) {
             accounts[i].balance += accounts[i].getMonthlyInterest();
             accounts[i].balance -= accounts[i].getMonthlyFee();
+            if (accounts[i] instanceof MoneyMarket){
+                ((MoneyMarket) accounts[i]).setWithdrawals(0);
+            }
             System.out.println(accounts[i]);
         }
         System.out.println("*end of list.\n");
