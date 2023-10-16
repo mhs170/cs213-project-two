@@ -5,6 +5,7 @@ public class MoneyMarket extends Savings {
     public static final double ANNUAL_INTEREST_RATE_IF_NOT_LOYAL = 0.045;
     public static final double ANNUAL_INTEREST_RATE_IF_LOYAL = 0.0475;
     public static final double MONTHLY_FEE = 25;
+    public static final double AMOUNT_TO_WAIVE_FEE = 2000;
 
     /**
      * Creates a new money market savings account
@@ -50,13 +51,25 @@ public class MoneyMarket extends Savings {
     }
 
     /**
+     * Sets monthly fee to 0 if balance >= 2000
+     * @return monthly fee
+     */
+    @Override
+    public double monthlyFee(){
+        if (balance >= AMOUNT_TO_WAIVE_FEE){
+            return 0;
+        }
+        return MONTHLY_FEE;
+    }
+
+    /**
      * Method to display Money Market accounts with proper formatting
      *
      * @return String that displays account info
      */
     @Override
     public String toString() {
-        if (isLoyal) {
+        if (balance >= 2000) {
             return String.format("Money Market::Savings::%s %s %s::Balance " +
                             "$%,.2f::is loyal::withdrawal: %d",
                     holder.getFname(), holder.getLname(), holder.getDob(),
