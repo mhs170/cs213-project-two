@@ -40,6 +40,15 @@ public class CollegeChecking extends Checking {
     }
 
     /**
+     * Overrides monthly Fee in checking
+     * @return 0 as monthlyFee
+     */
+    @Override
+    public double monthlyFee(){
+        return 0;
+    }
+
+    /**
      * Method to display college checking accounts with proper formatting
      *
      * @return String that displays account info
