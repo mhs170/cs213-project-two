@@ -258,7 +258,6 @@ public class AccountDatabase {
         System.out.println("*end of list.\n");
     }
 
-
     /**
      * Method to update and display the account balance for all accounts by
      * applying the fees and interests earned.

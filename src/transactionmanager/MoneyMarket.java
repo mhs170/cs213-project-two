@@ -61,10 +61,14 @@ public class MoneyMarket extends Savings {
      */
     @Override
     public double monthlyFee(){
+        double monthlyFee = 25;
         if (balance >= AMOUNT_TO_WAIVE_FEE){
-            return 0;
+            monthlyFee = 0;
         }
-        return MONTHLY_FEE;
+        if (withdrawal > 3){
+            monthlyFee += 10;
+        }
+        return monthlyFee;
     }
 
     /**
