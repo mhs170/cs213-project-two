@@ -1,5 +1,7 @@
 package transactionmanager;
 
+import java.text.DecimalFormat;
+
 public class AccountDatabase {
     private static final int NOT_FOUND = -1;
     private Account[] accounts; //list of various types of accounts
@@ -65,18 +67,18 @@ public class AccountDatabase {
         }
 
         //can't have both a C and CC account:
-        if(account instanceof CollegeChecking) {
+        if (account instanceof CollegeChecking) {
             Checking account2 = new Checking(
                     account.getHolder(), account.getBalance()
             );
-            if(contains(account2)) return false;
+            if (contains(account2)) return false;
         }
-        if(account instanceof Checking) {
+        if (account instanceof Checking) {
             CollegeChecking account2 = new CollegeChecking(
                     account.getHolder(), account.getBalance(),
                     Campus.NEW_BRUNSWICK
             );
-            if(contains(account2)) return false;
+            if (contains(account2)) return false;
         }
 
         if (numAcct == accounts.length) {
@@ -198,11 +200,13 @@ public class AccountDatabase {
      * and monthly interests based on current account balances.
      */
     public void printFeesAndInterests() {
+        DecimalFormat correctFormat = new DecimalFormat("0.00");
         if (numAcct == 0) {
             System.out.println("Account Database is empty!");
             return;
         }
-        System.out.println("\n*list of accounts with fee and monthly interest");
+        System.out.println("\n*list of accounts with fee and monthly " +
+                "interest");
         for (int i = 0; i < numAcct - 1; i++) {
             for (int j = 0; j < numAcct - i - 1; j++) {
                 if (compareAccountType(accounts[j], accounts[j + 1]) > 0) {
@@ -215,28 +219,36 @@ public class AccountDatabase {
         for (int i = 0; i < numAcct; i++) {
             String accountType = accounts[i].getClass().getSimpleName();
             if (accountType.equals("Checking")) {
-                System.out.printf("%s::fee $%.2f::monthly interest $%.2f",
-                        accounts[i], accounts[i].getMonthlyFee(),
-                        accounts[i].getMonthlyInterest());
+                System.out.printf("%s::fee $%s::monthly interest $%s",
+                        accounts[i],
+                        correctFormat.format(accounts[i].getMonthlyFee()),
+                        correctFormat.format(accounts[i]
+                                .getMonthlyInterest()));
                 System.out.println();
             }
             if (accountType.equals(
                     "CollegeChecking")) {
-                System.out.printf("%s::fee $%.2f::monthly interest $%.2f",
-                        accounts[i], accounts[i].getMonthlyFee(),
-                        accounts[i].getMonthlyInterest());
+                System.out.printf("%s::fee $%s::monthly interest $%s",
+                        accounts[i],
+                        correctFormat.format(accounts[i].getMonthlyFee()),
+                        correctFormat.format(accounts[i]
+                                .getMonthlyInterest()));
                 System.out.println();
             }
             if (accountType.equals("Savings")) {
-                System.out.printf("%s::fee $%.2f::monthly interest $%.2f",
-                        accounts[i], accounts[i].getMonthlyFee(),
-                        accounts[i].getMonthlyInterest());
+                System.out.printf("%s::fee $%s::monthly interest $%s",
+                        accounts[i],
+                        correctFormat.format(accounts[i].getMonthlyFee()),
+                        correctFormat.format(accounts[i]
+                                .getMonthlyInterest()));
                 System.out.println();
             }
             if (accountType.equals("MoneyMarket")) {
-                System.out.printf("%s::fee $%.2f::monthly interest $%.2f",
-                        accounts[i], accounts[i].getMonthlyFee(),
-                        accounts[i].getMonthlyInterest());
+                System.out.printf("%s::fee $%s::monthly interest $%s",
+                        accounts[i],
+                        correctFormat.format(accounts[i].getMonthlyFee()),
+                        correctFormat.format(accounts[i]
+                                .getMonthlyInterest()));
                 System.out.println();
             }
         }
