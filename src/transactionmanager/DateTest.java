@@ -4,6 +4,11 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+/**
+ * Contains unit tests for Date class
+ *
+ * @author Mohammed Salama, Dakshal Panicker
+ */
 public class DateTest {
 
     //5 invalid cases, 2 valid cases total
@@ -58,4 +63,6 @@ public class DateTest {
         Date date = new Date("1/0/2000");
         assertFalse(date.isValid());
     }
+
+
 }

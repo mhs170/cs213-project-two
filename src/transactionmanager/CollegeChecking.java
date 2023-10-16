@@ -1,5 +1,10 @@
 package transactionmanager;
 
+/**
+ * Checking account class with constants for different fees and rates
+ *
+ * @author Mohammed Salama, Dakshal Panicker
+ */
 public class CollegeChecking extends Checking {
     private Campus campus; //campus code
     public static final double ANNUAL_INTEREST_RATE = 0.01;

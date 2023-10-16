@@ -2,6 +2,12 @@ package transactionmanager;
 
 import java.util.Calendar;
 
+
+/**
+ * Date class for representing dates of birth
+ *
+ * @author Mohammed Salama, Dakshal Panicker
+ */
 public class Date implements Comparable<Date> {
     private int year;
     private int month;
@@ -188,25 +194,6 @@ public class Date implements Comparable<Date> {
             diff--;
         }
         return diff;
-    }
-
-    /**
-     * Return if the Date is within 6 months in the future
-     * @return true if within 6 months, false otherwise
-     */
-    public boolean isWithin6Months() {
-        if (!this.isInFuture()) return false;
-
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.MONTH, 6);
-        int yearIn6 = cal.get(Calendar.YEAR);
-        int monthIn6 = cal.get(Calendar.MONTH) + 1;
-        int dayIn6 = cal.get(Calendar.DAY_OF_MONTH);
-
-        Date dateIn6 = new Date(yearIn6, monthIn6, dayIn6);
-
-        //Check if within 6 months
-        return this.compareTo(dateIn6) <= 0;
     }
 
     /**

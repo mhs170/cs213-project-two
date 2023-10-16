@@ -1,5 +1,12 @@
 package transactionmanager;
 
+
+/**
+ * Account database for storing accounts with helper methods for
+ * opening, closing, finding accounts, etc.
+ *
+ * @author Mohammed Salama, Dakshal Panicker
+ */
 public class AccountDatabase {
     private static final int NOT_FOUND = -1;
     private Account[] accounts; //list of various types of accounts

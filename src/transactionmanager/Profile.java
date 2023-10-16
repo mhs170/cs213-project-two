@@ -1,5 +1,11 @@
 package transactionmanager;
 
+/**
+ * Profile class to store the first name, last name, and date of birth of
+ * the account holder
+ *
+ * @author Mohammed Salama, Dakshal Panicker
+ */
 public class Profile implements Comparable<Profile> {
     private String fname;
     private String lname;
