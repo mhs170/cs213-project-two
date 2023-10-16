@@ -80,6 +80,7 @@ public class MoneyMarket extends Savings {
         double monthlyFee = 25;
         if (balance >= AMOUNT_TO_WAIVE_FEE){
             monthlyFee = 0;
+            isLoyal = true;
         }
         if (getWithdrawal() > 3){
             monthlyFee += 10;
